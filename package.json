@@ -1,0 +1,13 @@
+{
+  "author": "Johannes Neumeier",
+  "description": "Koala prototype",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-less": "~1.0.*"
+  }
+}
