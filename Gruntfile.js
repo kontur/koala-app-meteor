@@ -44,6 +44,10 @@ module.exports = function (grunt) {
             gruntfile: {
                 files: '<%= jshint.gruntfile.src %>',
                 tasks: ['jshint:gruntfile']
+            },
+            less: {
+                files: 'less/*.less',
+                tasks: 'less'
             }
         }
     });

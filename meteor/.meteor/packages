@@ -10,3 +10,4 @@ service-configuration
 accounts-ui
 http
 iron:router
+reactive-var

@@ -13,18 +13,36 @@
     <a href="/search">Search</a>
   </nav>
 
-
 </body>
 
 
 
+<template name="Home">
+  <header>Home</header>
+  <h1>featured around here</h1>
+  <h1>hot venues around the globe (should personalize)</h1>
+  <h1>top trendsetters?</h1>
+  <h1>your networks’ activity (instagram photos at venues, likes of venues)</h1>
+</template>
 
+<template name="Explore">
+  <header>Explore</header>
+  <h1><a href="/explore/restaurants">Top restaurants</a></h1>
+  <h1><a href="/explore/bars">Top bars</a></h1>
+  top bars:
+  {{#each top_bars}}
+    {{>VenueCover}}
+  {{/each}}
+  <h1><a href="/explore/cafes">Top cafes</a></h1>
+  <h1><a href="/explore/hotels">Top hotels</a></h1>
+</template>
 
+<template name="ExploreCategory">
+  <header>Top ...</header>
+  {{ foo }}
+</template>
 
+<template name="Search">
+  <header>Search</header>
+</template>
 
-
-<template name="Home">Hello home</template>
-
-<template name="Explore">Hello explore</template>
-
-<template name="Search">Hello search</template>
