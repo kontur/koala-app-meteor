@@ -12,7 +12,6 @@
     <a href="/explore">Explore</a>
     <a href="/search">Search</a>
   </nav>
-
 </body>
 
 
@@ -27,19 +26,34 @@
 
 <template name="Explore">
   <header>Explore</header>
-  <h1><a href="/explore/restaurants">Top restaurants</a></h1>
-  <h1><a href="/explore/bars">Top bars</a></h1>
+  <h1><a href="/explore/food">Top restaurants</a></h1>
+  top restaurants:
+  {{#each top_food}}
+    {{>VenueCover}}
+  {{/each}}
+  <h1><a href="/explore/nightlife">Top bars</a></h1>
   top bars:
-  {{#each top_bars}}
+  {{#each top_nightlife}}
     {{>VenueCover}}
   {{/each}}
   <h1><a href="/explore/cafes">Top cafes</a></h1>
+  top cafes:
+  {{#each top_cafes}}
+    {{>VenueCover}}
+  {{/each}}
   <h1><a href="/explore/hotels">Top hotels</a></h1>
+  top hotels:
+  {{#each top_hotels}}
+    {{>VenueCover}}
+  {{/each}}
 </template>
 
 <template name="ExploreCategory">
   <header>Top ...</header>
-  {{ foo }}
+  all ...
+  {{#each venues}}
+    {{>VenueCover}}
+  {{/each}}
 </template>
 
 <template name="Search">
