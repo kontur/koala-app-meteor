@@ -1,8 +1,5 @@
 
 
-
-TopBarsResult = new ReactiveVar("nope");
-
 if (Meteor.isClient) {
 
     Meteor.subscribe("users");
@@ -18,6 +15,8 @@ if (Meteor.isClient) {
 
 
 if (Meteor.isServer) {
+    console.log("Meteor.settings", Meteor.settings);
+
     Meteor.publish("users", function () {
         return Meteor.users.find(this.userId, {fields: {"services.instagram.accessToken": 1}});
     });
@@ -37,7 +36,7 @@ if (Meteor.isServer) {
 
 
     function getApiRoute(endpoint) {
-        return config.api + endpoint + "?access_token=" +
+        return Meteor.settings['api'] + endpoint + "?access_token=" +
             (Meteor.user().services ? Meteor.user().services.instagram.accessToken : null);
     }
 }

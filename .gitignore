@@ -1,2 +1,4 @@
 .idea/
 node_modules/
+meteor/config.dev.json
+meteor/config.deploy.json
