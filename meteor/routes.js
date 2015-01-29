@@ -34,9 +34,9 @@ Router.route('/venue/:id', function () {
     this.render('Venue', {
         to: 'main',
         data: {
-            'venue': Venues.findOne({id: this.params.id})
+            id: this.params.id
         }
-    })
+    });
 });
 
 

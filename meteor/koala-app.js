@@ -65,6 +65,7 @@ if (Meteor.isClient) {
         });
     };
 
+
     Template.ExploreCategory.rendered = function () {
         var category = this.data.category;
         console.log("cate", category);
@@ -78,9 +79,29 @@ if (Meteor.isClient) {
         })
     };
 
-
+    Template.Venue.created = function () {
+        this.venue = new ReactiveVar();
+        this.images = new ReactiveVar();
+    };
+    Template.Venue.helpers({
+        'venue': function () {
+            return Template.instance().venue.get();
+        },
+        'images': function () {
+            return Template.instance().images.get();
+        }
+    });
     Template.Venue.rendered = function () {
+        var tpl = Template.instance();
+        console.log("hello venue", this.data);
+        Meteor.call("venue", this.data.id, function (err, res) {
+            console.log("err", err, "res", res);
+            console.log(JSON.parse(res.content));
+            var contents = JSON.parse(res.content);
 
+            tpl.venue.set(contents.venue);
+            tpl.images.set(contents.images)
+        });
     };
 
 }
@@ -111,11 +132,16 @@ if (Meteor.isServer) {
 
             return Meteor.http.call("GET", getApiRoute("venues/show/" + lat + "/" + lng +
                 (category ? "/" + category : "") + "?" + serializeQueryString(options)));
+        },
+
+        "venue": function (id) {
+            return Meteor.http.call("GET", getApiRoute("venue/" + id + "?"));
         }
     });
 
 
     function getApiRoute(endpoint) {
+        console.log("getApiRoute", endpoint);
         return Meteor.settings['api'] + endpoint + "&access_token=" +
             (Meteor.user().services ? Meteor.user().services.instagram.accessToken : null);
     }

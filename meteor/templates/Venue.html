@@ -1,0 +1,16 @@
+<template name="Venue">
+    {{#with venue}}
+    <h1>{{name}}</h1>
+    {{/with}}
+
+    <h1>Images</h1>
+    {{#each images}}
+    {{>Image}}
+    {{/each}}
+</template>
+
+
+<template name="Image">
+    {{user}}
+    <img src="{{image}}">
+</template>
