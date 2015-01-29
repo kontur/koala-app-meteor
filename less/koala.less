@@ -1,4 +1,60 @@
+@red: #d0021b;
+@greyLight: #aaa;
 
-html {
-    background: white;
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+
+  > header {
+    background: grey;
+  }
+
+  > nav {
+    a {
+    }
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: @red;
+  clear: both;
+  font-size: 1em;
+  text-transform: uppercase;
+  > a {
+    color: inherit;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+
+main {
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+
+.venue-cover {
+  clear: both;
+  float: left;
+  margin: 0 0 1em;
+  width: 100%;
+
+  img {
+    width: 100%;
+  }
+
+  .meta {
+    color: @greyLight;
+    font-size: 0.8em;
+  }
 }

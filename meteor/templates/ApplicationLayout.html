@@ -1,0 +1,15 @@
+<template name="ApplicationLayout">
+    <header>
+        {{> loginButtons}}
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/explore">Explore</a>
+        <a href="/search">Search</a>
+    </nav>
+
+    <main>
+        {{>yield "main"}}
+    </main>
+</template>

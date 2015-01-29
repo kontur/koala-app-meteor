@@ -1,12 +1,21 @@
 
 
 <template name="VenueCover">
+    <div class="venue-cover">
+        {{#with venue}}
+        <h1><a href="/venue/{{id}}">{{name}}</a></h1>
+        Distance: 0.X km
+        {{/with}}
 
-    <h1>{{name}}</h1>
-    <img src="{{image}}">
-    photo by instagram user: <a href="">{{user}}</a> @
-    {{created_time}}<br>
-    {{api_calls_remaining}}
-    {{type}}
+        {{#with instagram}}
+        <img src="{{image}}">
+        <div class="meta">
+            photo by instagram user: <a href="">{{user}}</a> @
+            {{created_time}}<br>
+            {{api_calls_remaining}}
+            {{type}}
+        </div>
+        {{/with}}
+    </div>
 
 </template>

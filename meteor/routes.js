@@ -1,22 +1,26 @@
+Router.configure({
+    layoutTemplate: 'ApplicationLayout',
+    loadingTemplate: 'Loading'
+//    notFoundTemplate: 'notFound',
+});
+
 Router.route('/', function () {
-    this.render('Home');
+    this.render('Home', {
+        to: 'main'
+    });
 });
 
 
 
 Router.route('/explore', function () {
     this.render('Explore', {
-        data: {
-            'top_nightlife': Venues.find({type: 'nightlife'}, { limit: 3 }),
-            'top_hotels': Venues.find({type: 'hotels'}, { limit: 3}),
-            'top_food': Venues.find({type: 'food'}, {limit: 3}),
-            'top_cafes': Venues.find({type: 'cafes'}, {limit: 3})
-        }
+        to: 'main'
     });
 });
 
 Router.route('/explore/:category', function () {
     this.render('ExploreCategory', {
+        to: 'main',
         data: {
             'category': this.params.category,
             'venues': Venues.find({type: this.params.category}, { limit: 10})
@@ -25,6 +29,19 @@ Router.route('/explore/:category', function () {
 });
 
 
+Router.route('/venue/:id', function () {
+    console.log("venue", this.params.id);
+    this.render('Venue', {
+        to: 'main',
+        data: {
+            'venue': Venues.findOne({id: this.params.id})
+        }
+    })
+});
+
+
 Router.route('/search', function () {
-    this.render('Search');
+    this.render('Search', {
+        to: 'main'
+    });
 });

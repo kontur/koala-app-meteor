@@ -1,62 +1,70 @@
 <head>
-  <title>koala-app</title>
+    <title>koala-app</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
 </head>
 
 <body>
-  <header>
-    {{> loginButtons}}
-  </header>
-
-  <nav>
-    <a href="/">Home</a>
-    <a href="/explore">Explore</a>
-    <a href="/search">Search</a>
-  </nav>
 </body>
 
 
-
 <template name="Home">
-  <header>Home</header>
-  <h1>featured around here</h1>
-  <h1>hot venues around the globe (should personalize)</h1>
-  <h1>top trendsetters?</h1>
-  <h1>your networks’ activity (instagram photos at venues, likes of venues)</h1>
+    <header>Home</header>
+    <h1>featured around here</h1>
+
+    <h1>hot venues around the globe (should personalize)</h1>
+
+    <h1>top trendsetters?</h1>
+
+    <h1>your networks’ activity (instagram photos at venues, likes of venues)</h1>
 </template>
+
 
 <template name="Explore">
-  <header>Explore</header>
-  <h1><a href="/explore/food">Top restaurants</a></h1>
-  top restaurants:
-  {{#each top_food}}
-    {{>VenueCover}}
-  {{/each}}
-  <h1><a href="/explore/nightlife">Top bars</a></h1>
-  top bars:
-  {{#each top_nightlife}}
-    {{>VenueCover}}
-  {{/each}}
-  <h1><a href="/explore/cafes">Top cafes</a></h1>
-  top cafes:
-  {{#each top_cafes}}
-    {{>VenueCover}}
-  {{/each}}
-  <h1><a href="/explore/hotels">Top hotels</a></h1>
-  top hotels:
-  {{#each top_hotels}}
-    {{>VenueCover}}
-  {{/each}}
+    <header>Explore</header>
+    <h1><a href="/explore/food">Restaurants</a></h1>
+    {{#each top_food}}
+        {{>VenueCover}}
+    {{/each}}
+
+    <h1><a href="/explore/nightlife">Bars</a></h1>
+    {{#each top_nightlife}}
+        {{>VenueCover}}
+    {{/each}}
+
+    <h1><a href="/explore/cafes">Cafes</a></h1>
+    {{#each top_cafes}}
+        {{>VenueCover}}
+    {{/each}}
+
+    <h1><a href="/explore/hotels">Hotels</a></h1>
+    {{#each top_hotels}}
+        {{>VenueCover}}
+    {{/each}}
 </template>
+
+
+<template name="Venue">
+    <header>Venue</header>
+    {{#with venue}}
+        {{#with venue}}
+            <h1>{{name}}</h1>
+        {{/with}}
+    {{/with}}
+</template>
+
 
 <template name="ExploreCategory">
-  <header>Top ...</header>
-  all ...
-  {{#each venues}}
-    {{>VenueCover}}
-  {{/each}}
+    <header>Top ...</header>
+    all ...
+    {{#each venues}}
+        {{>VenueCover}}
+    {{/each}}
 </template>
 
+
 <template name="Search">
-  <header>Search</header>
+    <header>Search</header>
 </template>
 
