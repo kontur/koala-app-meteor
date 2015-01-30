@@ -7,7 +7,22 @@
                 <img src="{{user_profile}}">
                 <span>{{user}}</span>
             </a>
-         </div>
+        </div>
         <img src="{{image}}">
+        <div class="image-meta">
+            {{#if comments}}
+            <div class="image-comments">
+                <span>{{comments}} comments</span>
+                <span><button>view</button></span>
+                <span><button>comment</button></span>
+            </div>
+            {{/if}}
+            {{#if likes}}
+            <div class="image-likes">
+                <span>{{likes}} likes</span>
+                <span><button>like</button></span>
+            </div>
+            {{/if}}
+        </div>
     </div>
 </template>

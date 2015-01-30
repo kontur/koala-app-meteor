@@ -46,6 +46,17 @@ img {
   vertical-align: top;
 }
 
+
+
+// mixins
+.font-smaller() {
+  color: @greyLight;
+  font-size: smaller;
+}
+
+
+
+
 // Explore overview venue preview
 .venue-cover {
   clear: both;
@@ -65,8 +76,7 @@ img {
 
 // Venue view
 .venue-information {
-  color: @greyLight;
-  font-size: smaller;
+  .font-smaller();
   span {
     display: block;
     margin: 0 0 0.5em;
@@ -96,6 +106,15 @@ img {
     z-index: 2;
     img {
       float: right;
+    }
+  }
+
+  .image-meta {
+    .font-smaller();
+    > div {
+      display: block;
+      margin: 0.5em;
+      padding: 0.05em 0.25em 0.15em;
     }
   }
 }

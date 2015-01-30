@@ -76,6 +76,15 @@ img {
 .image .image-user img {
   float: right;
 }
+.image .image-meta {
+  color: #aaaaaa;
+  font-size: smaller;
+}
+.image .image-meta > div {
+  display: block;
+  margin: 0.5em;
+  padding: 0.05em 0.25em 0.15em;
+}
 .user-avatar img {
   border-radius: 100%;
   display: block;

@@ -8,13 +8,7 @@
         {{/with}}
 
         {{#with instagram}}
-        <img src="{{image}}">
-        <div class="meta">
-            photo by instagram user: <a href="">{{user}}</a> @
-            {{created_time}}<br>
-            {{api_calls_remaining}}
-            {{type}}
-        </div>
+            {{>Image}}
         {{/with}}
     </div>
 
