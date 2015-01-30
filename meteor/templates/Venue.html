@@ -18,17 +18,45 @@
     <span>
         Score: {{rating}}
     </span>
-    <span>
-    {{#with price}}
-        Price range {{tier}}
-    {{/with}}
-    </span>
+
+
+
+
+
+    <div class="venue-tips">
+        <ul>
+        {{#with tips}}
+            {{#each groups}}
+                {{#with this}}
+                    {{#each items}}
+                    <li>
+                        <div class="tips-user user-avatar">
+                        {{#with user}}
+                            {{#with photo}}
+                                <img src="{{prefix}}{{suffix}}">
+                            {{/with}}
+                            <span>{{firstName}} {{lastName}}</span>
+                        {{/with}}
+                        </div>
+                        <q>{{text}}</q>
+                        {{#if photo}}
+                            [view photo]
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                {{/with}}
+            {{/each}}
+        {{/with}}
+        </ul>
+    </div>
+
+
 
 
     <span>
-    Tags
+    Tags:
     {{#each tags}}
-        {{this}}
+        <span class="tag">{{this}}</span>
     {{/each}}
     </span>
 
@@ -54,10 +82,10 @@
         Opening hours
     </span>
     <span>Menu</span>
-
-
     <span>
-        Tips
+    {{#with price}}
+        Price range {{tier}}
+    {{/with}}
     </span>
 
         {{/with}}

@@ -33,6 +33,10 @@ a {
   text-decoration: none;
 }
 
+q {
+  font-style: italic;
+}
+
 main {
 }
 
@@ -67,6 +71,13 @@ img {
     display: block;
     margin: 0 0 0.5em;
   }
+
+  .venue-tips {
+    // "all but the first 3"
+    li:nth-child(n+4) {
+      display: none;
+    }
+  }
 }
 
 .venue-images {
@@ -84,14 +95,29 @@ img {
     text-align: right;
     z-index: 2;
     img {
-      border-radius: 100%;
-      display: block;
       float: right;
-      height: auto;
-      width: 50px;
-    }
-    span {
-      display: block;
     }
   }
+}
+
+// Generic user avatar + name
+.user-avatar {
+  img {
+    border-radius: 100%;
+    display: block;
+    height: auto;
+    width: 50px;
+  }
+  span {
+    display: block;
+  }
+}
+
+// Generic tag style
+.tag {
+  background: @greyLight;
+  border-radius: 0.25em;
+  color: white;
+  display: inline !important;
+  padding: 0.05em 0.25em 0.15em;
 }
