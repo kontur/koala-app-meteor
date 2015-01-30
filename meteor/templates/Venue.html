@@ -1,16 +1,72 @@
 <template name="Venue">
-    {{#with venue}}
-    <h1>{{name}}</h1>
+
+    <div class="venue-information">
+        {{#with venue}}
+        <h1>{{name}}</h1>
+
+    <span>
+    {{#with categories}}
+        {{#each this}}
+            {{#with this}}
+                {{name}}
+            {{/with}}
+        {{/each}}
+    {{/with}}
+    </span>
+
+
+    <span>
+        Score: {{rating}}
+    </span>
+    <span>
+    {{#with price}}
+        Price range {{tier}}
+    {{/with}}
+    </span>
+
+
+    <span>
+    Tags
+    {{#each tags}}
+        {{this}}
+    {{/each}}
+    </span>
+
+    {{#with location}}
+        <span>Address:</span>
+        {{#each formattedAddress}}
+            <span>{{this}}</span>
+        {{/each}}
+        <span>Distance: 0.x km</span>
     {{/with}}
 
-    <h1>Images</h1>
-    {{#each images}}
-    {{>Image}}
-    {{/each}}
-</template>
+
+    <span>
+    {{#with contact}}
+        Phone: {{formattedPhone}}
+    {{/with}}
+    </span>
+    <span>
+        <a href="{{url}}">{{url}}</a>
+    </span>
+
+    <span>
+        Opening hours
+    </span>
+    <span>Menu</span>
 
 
-<template name="Image">
-    {{user}}
-    <img src="{{image}}">
+    <span>
+        Tips
+    </span>
+
+        {{/with}}
+    </div>
+
+    <div class="venue-images">
+        <h1>Images</h1>
+        {{#each images}}
+            {{>Image}}
+        {{/each}}
+    </div>
 </template>

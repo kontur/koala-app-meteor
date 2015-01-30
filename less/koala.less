@@ -33,16 +33,16 @@ a {
   text-decoration: none;
 }
 
-
 main {
 }
 
 img {
   height: auto;
   max-width: 100%;
+  vertical-align: top;
 }
 
-
+// Explore overview venue preview
 .venue-cover {
   clear: both;
   float: left;
@@ -56,5 +56,42 @@ img {
   .meta {
     color: @greyLight;
     font-size: 0.8em;
+  }
+}
+
+// Venue view
+.venue-information {
+  color: @greyLight;
+  font-size: smaller;
+  span {
+    display: block;
+    margin: 0 0 0.5em;
+  }
+}
+
+.venue-images {
+
+}
+
+
+// Any one instagram image
+.image {
+  position: relative;
+  .image-user {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    text-align: right;
+    z-index: 2;
+    img {
+      border-radius: 100%;
+      display: block;
+      float: right;
+      height: auto;
+      width: 50px;
+    }
+    span {
+      display: block;
+    }
   }
 }

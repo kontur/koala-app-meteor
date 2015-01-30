@@ -34,6 +34,7 @@ a {
 img {
   height: auto;
   max-width: 100%;
+  vertical-align: top;
 }
 .venue-cover {
   clear: both;
@@ -47,4 +48,32 @@ img {
 .venue-cover .meta {
   color: #aaaaaa;
   font-size: 0.8em;
+}
+.venue-information {
+  color: #aaaaaa;
+  font-size: smaller;
+}
+.venue-information span {
+  display: block;
+  margin: 0 0 0.5em;
+}
+.image {
+  position: relative;
+}
+.image .image-user {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  text-align: right;
+  z-index: 2;
+}
+.image .image-user img {
+  border-radius: 100%;
+  display: block;
+  float: right;
+  height: auto;
+  width: 50px;
+}
+.image .image-user span {
+  display: block;
 }
