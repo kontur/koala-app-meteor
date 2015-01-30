@@ -3,8 +3,16 @@
 <template name="VenueCover">
     <div class="venue-cover">
         {{#with venue}}
-        <h1><a href="/venue/{{id}}">{{name}}</a></h1>
-        Distance: 0.X km
+            <h1><a href="/venue/{{id}}">{{name}}</a></h1>
+            <span>
+                {{#with categories}}
+                    {{#each this}}
+                        {{name}}
+                    {{/each}}
+                {{/with}}
+            </span>
+            <span>Rating {{rating}}</span>
+            <span>Distance: 0.X km</span>
         {{/with}}
 
         {{#with instagram}}

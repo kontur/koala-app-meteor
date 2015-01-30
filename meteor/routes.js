@@ -22,8 +22,7 @@ Router.route('/explore/:category', function () {
     this.render('ExploreCategory', {
         to: 'main',
         data: {
-            'category': this.params.category,
-            'venues': Venues.find({type: this.params.category}, { limit: 10})
+            'category': this.params.category
         }
     });
 });

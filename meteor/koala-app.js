@@ -16,69 +16,6 @@ if (Meteor.isClient) {
 
     console.log("startup", Meteor.user());
 
-
-    Template.Explore.created = function () {
-        console.log("created");
-        this.food = new ReactiveVar();
-        this.nightlife = new ReactiveVar();
-        this.cafes = new ReactiveVar();
-        this.hotels = new ReactiveVar();
-    };
-
-    Template.Explore.helpers({
-        'top_food': function () {
-            return Template.instance().food.get();
-        },
-        'top_nightlife': function () {
-            return Template.instance().nightlife.get();
-        },
-        'top_cafes': function () {
-            return Template.instance().cafes.get();
-        },
-
-        'top_hotels': function () {
-            return Template.instance().hotels.get();
-        }
-    });
-
-    Template.Explore.rendered = function () {
-        console.log("rendered");
-
-        var tpl = Template.instance();
-
-        navigator.geolocation.getCurrentPosition(function (position) {
-            Session.set("geolocation", position);
-
-            Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: 'food' }, function (err, res) {
-                console.log("venues call food example", JSON.parse(res.content));
-                tpl.food.set(JSON.parse(res.content));
-            });
-            Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: 'nightlife', limit: 2 }, function (err, res) {
-                tpl.nightlife.set(JSON.parse(res.content));
-            });
-            Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: 'cafes' }, function (err, res) {
-                tpl.cafes.set(JSON.parse(res.content));
-            });
-            Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: 'hotels' }, function (err, res) {
-                tpl.hotels.set(JSON.parse(res.content));
-            });
-        });
-    };
-
-
-    Template.ExploreCategory.rendered = function () {
-        var category = this.data.category;
-        console.log("cate", category);
-        navigator.geolocation.getCurrentPosition(function (position) {
-            Session.set("geolocation", position);
-            Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: category, limit: 10 }, function (err, res) {
-                $.each(JSON.parse(res.content), function (index, elem) {
-                    Venues.insert($.extend(elem, {type: category, cover: elem.instagram}));
-                });
-            });
-        })
-    };
-
     Template.Venue.created = function () {
         this.venue = new ReactiveVar();
         this.images = new ReactiveVar();
