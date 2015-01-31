@@ -4,7 +4,7 @@ if (Meteor.isClient) {
     };
 
     Template.ExploreCategory.helpers({
-        'venues': function () {
+        "venues": function () {
             return Template.instance().venues.get();
         }
     });
@@ -17,7 +17,7 @@ if (Meteor.isClient) {
 
             Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: tpl.data.category, limit: 5 }, function (err, res) {
                 if (err) {
-                    Session.set('errors', _.union(Session.get('errors'), [err]));
+                    Session.set("errors", _.union(Session.get("errors"), [err]));
                     return;
                 }
                 tpl.venues.set(JSON.parse(res.content));

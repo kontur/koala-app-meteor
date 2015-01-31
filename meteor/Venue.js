@@ -6,10 +6,10 @@ if (Meteor.isClient) {
     };
 
     Template.Venue.helpers({
-        'venue': function () {
+        "venue": function () {
             return Template.instance().venue.get();
         },
-        'images': function () {
+        "images": function () {
             return Template.instance().images.get();
         }
     });
@@ -18,7 +18,7 @@ if (Meteor.isClient) {
         var tpl = Template.instance();
         Meteor.call("venue", this.data.id, function (err, res) {
             if (err) {
-                Session.set('errors', _.union(Session.get('errors'), [err]));
+                Session.set("errors", _.union(Session.get("errors"), [err]));
                 return;
             }
             var contents = JSON.parse(res.content);

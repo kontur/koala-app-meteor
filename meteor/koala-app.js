@@ -8,7 +8,7 @@ if (Meteor.isClient) {
             return Meteor.user().services.instagram.username;
         },
         errors: function () {
-            return Session.get('errors');
+            return Session.get("errors");
         }
     });
 }
@@ -59,7 +59,7 @@ if (Meteor.isServer) {
     // TODO refactor this to automatically check if to add ? or not so calls will be easier
     function getApiRoute(endpoint) {
         console.log("getApiRoute", endpoint);
-        return Meteor.settings['api'] + endpoint + "&access_token=" +
+        return Meteor.settings["api"] + endpoint + "&access_token=" +
             (Meteor.user().services ? Meteor.user().services.instagram.accessToken : null);
     }
 
