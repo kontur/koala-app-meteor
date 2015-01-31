@@ -1,10 +1,12 @@
 @import "../bower_components/bootstrap/less/variables.less";
+@import "../bower_components/bootstrap/less/mixins/vendor-prefixes.less";
 
 //** Load fonts from this directory.
 @icon-font-path: "/fonts/";
 @import "../bower_components/bootstrap/less/glyphicons.less";
 
-em {.glyphicon-star();}
+@import "header.less";
+@import "nav.less";
 
 @red: #d0021b;
 @greyLight: #aaa;
@@ -16,6 +18,7 @@ html, body {
 
 body {
   font-family: sans-serif;
+  margin-top: 2.5em;
 
   > header {
     background: grey;
@@ -45,7 +48,14 @@ q {
   font-style: italic;
 }
 
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
 main {
+  padding: 1em;
 }
 
 img {
@@ -54,16 +64,11 @@ img {
   vertical-align: top;
 }
 
-
-
 // mixins
 .font-smaller() {
   color: @greyLight;
   font-size: smaller;
 }
-
-
-
 
 // Explore overview venue preview
 .venue-cover {
@@ -101,7 +106,6 @@ img {
 .venue-images {
 
 }
-
 
 // Any one instagram image
 .image {

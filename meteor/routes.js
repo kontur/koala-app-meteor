@@ -1,5 +1,5 @@
 Router.configure({
-    layoutTemplate: "ApplicationLayout",
+    layoutTemplate: "Shell",
     loadingTemplate: "Loading"
 //    notFoundTemplate: "notFound",
 });

@@ -3,7 +3,7 @@ if (Meteor.isClient) {
     Meteor.subscribe("users");
     console.log("startup", Meteor.user());
 
-    Template.ApplicationLayout.helpers({
+    Template.Shell.helpers({
         username: function () {
             return Meteor.user().services.instagram.username;
         },
@@ -11,6 +11,17 @@ if (Meteor.isClient) {
             return Session.get("errors");
         }
     });
+
+
+    Template.Shell.events({
+        "click #header .menu-toggle": function (e) {
+            $("#nav").toggleClass("open");
+        },
+        "click #nav a": function (e) {
+            $("#nav").removeClass("open");
+        }
+    });
+
 }
 
 
