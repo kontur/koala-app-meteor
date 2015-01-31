@@ -1,17 +1,6 @@
-// http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
-serializeQueryString = function (obj) {
-    var str = [];
-    for (var p in obj)
-        if (obj.hasOwnProperty(p)) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-        }
-    return str.join("&");
-};
-
 if (Meteor.isClient) {
 
     Meteor.subscribe("users");
-
     console.log("startup", Meteor.user());
 
     Template.ApplicationLayout.helpers({
@@ -22,8 +11,6 @@ if (Meteor.isClient) {
             return Session.get('errors');
         }
     });
-
-
 }
 
 
@@ -59,15 +46,33 @@ if (Meteor.isServer) {
 
         "venue": function (id) {
             return Meteor.http.call("GET", getApiRoute("venue/" + id + "?"));
+        },
+
+        "image_comments": function (id) {
+            return Meteor.http.call("GET", getApiRoute("image_comments/" + id + "?"))
         }
     });
 
 
+    // Helpers
+
+    // TODO refactor this to automatically check if to add ? or not so calls will be easier
     function getApiRoute(endpoint) {
         console.log("getApiRoute", endpoint);
         return Meteor.settings['api'] + endpoint + "&access_token=" +
             (Meteor.user().services ? Meteor.user().services.instagram.accessToken : null);
     }
+
+
+    // http://stackoverflow.com/questions/1714786/querystring-encoding-of-a-javascript-object
+    function serializeQueryString(obj) {
+        var str = [];
+        for (var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+    };
 
 }
 

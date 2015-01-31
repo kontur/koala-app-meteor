@@ -1,8 +1,6 @@
-
 if (Meteor.isClient) {
 
     Template.Explore.created = function () {
-        console.log("created");
         this.food = new ReactiveVar();
         this.nightlife = new ReactiveVar();
         this.cafes = new ReactiveVar();
@@ -26,8 +24,6 @@ if (Meteor.isClient) {
     });
 
     Template.Explore.rendered = function () {
-        console.log("rendered");
-
         var tpl = Template.instance();
 
         navigator.geolocation.getCurrentPosition(function (position) {

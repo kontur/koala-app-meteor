@@ -10,10 +10,10 @@
         </div>
         <img src="{{image}}">
         <div class="image-meta">
-            {{#if comments}}
+            {{#if comments_count}}
             <div class="image-comments">
-                <span>{{comments}} comments</span>
-                <span><button>view</button></span>
+                <span>{{comments_count}} comments</span>
+                <span><button class="view-comments">view</button></span>
                 <span><button>comment</button></span>
             </div>
             {{/if}}
@@ -24,5 +24,23 @@
             </div>
             {{/if}}
         </div>
+
+        {{#if comments}}
+        <div class="image-comments">
+            Comments:
+            {{#each comments}}
+                {{>ImageComment}}
+            {{/each}}
+        </div>
+        {{/if}}
     </div>
+</template>
+
+
+<template name="ImageComment">
+    <div class="user-avatar">
+        <img src="{{profile_picture}}">
+        <span>{{username}}</span>
+    </div>
+    {{text}}
 </template>
