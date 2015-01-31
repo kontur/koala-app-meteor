@@ -1,4 +1,3 @@
-
 if (Meteor.isClient) {
     Template.ExploreCategory.created = function () {
         this.venues = new ReactiveVar();
@@ -17,7 +16,10 @@ if (Meteor.isClient) {
             Session.set("geolocation", position);
 
             Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: tpl.data.category, limit: 5 }, function (err, res) {
-                console.log("venues call food example", JSON.parse(res.content));
+                if (err) {
+                    Session.set('errors', _.union(Session.get('errors'), [err]));
+                    return;
+                }
                 tpl.venues.set(JSON.parse(res.content));
             });
         })

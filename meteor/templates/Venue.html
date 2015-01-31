@@ -4,92 +4,72 @@
         {{#with venue}}
         <h1>{{name}}</h1>
 
-    <span>
-    {{#with categories}}
-        {{#each this}}
-            {{#with this}}
-                {{name}}
-            {{/with}}
-        {{/each}}
-    {{/with}}
-    </span>
-
-
-    <span>
-        Score: {{rating}}
-    </span>
-
-
-
-
-
-    <div class="venue-tips">
-        <ul>
-        {{#with tips}}
-            {{#each groups}}
-                {{#with this}}
-                    {{#each items}}
-                    <li>
-                        <div class="tips-user user-avatar">
-                        {{#with user}}
-                            {{#with photo}}
-                                <img src="{{prefix}}{{suffix}}">
-                            {{/with}}
-                            <span>{{firstName}} {{lastName}}</span>
-                        {{/with}}
-                        </div>
-                        <q>{{text}}</q>
-                        {{#if photo}}
-                            [view photo]
-                        {{/if}}
-                    </li>
-                    {{/each}}
-                {{/with}}
+        <span>
+        {{#with categories}}
+            {{#each this}}
+                {{this.name}}
             {{/each}}
         {{/with}}
-        </ul>
-    </div>
+        </span>
+
+        <span>
+            Score: {{rating}}
+        </span>
+
+        <div class="venue-tips">
+            <ul>
+            {{#with tips}}
+                {{#each groups}}
+                    {{#with this}}
+                        {{#each items}}
+                        <li>
+                            <div class="tips-user user-avatar">
+                                <img src="{{user.photo.prefix}}{{user.photo.suffix}}">
+                                <span>{{user.firstName}} {{user.lastName}}</span>
+                            </div>
+                            <q>{{text}}</q>
+                            {{#if photo}}
+                                [view photo]
+                            {{/if}}
+                        </li>
+                        {{/each}}
+                    {{/with}}
+                {{/each}}
+            {{/with}}
+            </ul>
+        </div>
 
 
 
 
-    <span>
-    Tags:
-    {{#each tags}}
-        <span class="tag">{{this}}</span>
-    {{/each}}
-    </span>
+        <span>
+        Tags:
+        {{#each tags}}
+            <span class="tag">{{this}}</span>
+        {{/each}}
+        </span>
 
-    {{#with location}}
+
         <span>Address:</span>
-        {{#each formattedAddress}}
+        {{#each location.formattedAddress}}
             <span>{{this}}</span>
         {{/each}}
         <span>Distance: 0.x km</span>
-    {{/with}}
 
 
-    <span>
-    {{#with contact}}
-        Phone: {{formattedPhone}}
-    {{/with}}
-    </span>
-    <span>
-        <a href="{{url}}">{{url}}</a>
-    </span>
+        <span>Phone: {{contact.formattedPhone}}</span>
 
-    <span>
-        Opening hours
-    </span>
-    <span>Menu</span>
-    <span>
-    {{#with price}}
-        Price range {{tier}}
-    {{/with}}
-    </span>
+        <span><a href="{{url}}">{{url}}</a></span>
+
+        <span>
+            Opening hours
+        </span>
+        <span>Menu</span>
+        <span>Price range {{price.tier}}</span>
 
         {{/with}}
     </div>
+
 
     <div class="venue-images">
         <h1>Images</h1>

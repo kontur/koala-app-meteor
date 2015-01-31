@@ -34,16 +34,31 @@ if (Meteor.isClient) {
             Session.set("geolocation", position);
 
             Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: 'food' }, function (err, res) {
-                console.log("venues call food example", JSON.parse(res.content));
+                if (err) {
+                    Session.set('errors', _.union(Session.get('errors'), [err]));
+                    return;
+                }
                 tpl.food.set(JSON.parse(res.content));
             });
             Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: 'nightlife', limit: 2 }, function (err, res) {
+                if (err) {
+                    Session.set('errors', _.union(Session.get('errors'), [err]));
+                    return;
+                }
                 tpl.nightlife.set(JSON.parse(res.content));
             });
             Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: 'cafes' }, function (err, res) {
+                if (err) {
+                    Session.set('errors', _.union(Session.get('errors'), [err]));
+                    return;
+                }
                 tpl.cafes.set(JSON.parse(res.content));
             });
             Meteor.call("venues", position.coords.latitude, position.coords.longitude, { category: 'hotels' }, function (err, res) {
+                if (err) {
+                    Session.set('errors', _.union(Session.get('errors'), [err]));
+                    return;
+                }
                 tpl.hotels.set(JSON.parse(res.content));
             });
         });

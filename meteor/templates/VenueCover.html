@@ -2,22 +2,19 @@
 
 <template name="VenueCover">
     <div class="venue-cover">
-        {{#with venue}}
-            <h1><a href="/venue/{{id}}">{{name}}</a></h1>
-            <span>
-                {{#with categories}}
-                    {{#each this}}
-                        {{name}}
-                    {{/each}}
-                {{/with}}
-            </span>
-            <span>Rating {{rating}}</span>
-            <span>Distance: 0.X km</span>
-        {{/with}}
+        <h1><a href="/venue/{{id}}">{{venue.name}}</a></h1>
+        <span>
+            {{#with venue.categories}}
+                {{#each this}}
+                    {{name}}
+                {{/each}}
+            {{/with}}
+        </span>
+        <span>Rating {{venue.rating}}</span>
+        <span>Distance: 0.X km</span>
 
         {{#with instagram}}
             {{>Image}}
         {{/with}}
     </div>
-
 </template>

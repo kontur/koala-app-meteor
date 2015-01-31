@@ -4,12 +4,17 @@ Router.configure({
 //    notFoundTemplate: 'notFound',
 });
 
+Router.onBeforeAction(function (req, res, next) {
+    // reset error message array before showing next view
+    Session.set('errors', null);
+    this.next();
+});
+
 Router.route('/', function () {
     this.render('Home', {
         to: 'main'
     });
 });
-
 
 
 Router.route('/explore', function () {

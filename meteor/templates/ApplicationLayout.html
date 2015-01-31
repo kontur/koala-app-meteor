@@ -1,13 +1,28 @@
 <template name="ApplicationLayout">
     <header>
-        {{> loginButtons}}
+        <nav>
+            <a href="/">Home</a>
+            <a href="/explore">Explore</a>
+            <a href="/search">Search</a>
+        </nav>
+
+        <div id="login-wrapper">
+            {{> loginButtons}}
+        </div>
     </header>
 
-    <nav>
-        <a href="/">Home</a>
-        <a href="/explore">Explore</a>
-        <a href="/search">Search</a>
-    </nav>
+    {{#if errors}}
+    <div id="errors">
+        <strong>Errors:</strong>
+        {{#each errors}}
+            <p>{{this.message}}</p>
+            {{#if this.details}}
+                <p>{{this.details}}</p>
+            {{/if}}
+        {{/each}}
+    </div>
+    {{/if}}
+
 
     <main>
         {{>yield "main"}}
