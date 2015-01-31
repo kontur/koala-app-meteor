@@ -61,6 +61,19 @@ if (Meteor.isServer) {
 
         "image_comments": function (id) {
             return Meteor.http.call("GET", getApiRoute("image_comments/" + id + "?"))
+        },
+
+        "trendsetters": function (lat, lng, opt) {
+            var options = {};
+            var defaults = {
+                limit: 4
+            };
+            options = _.extend(defaults, opt);
+            return Meteor.http.call("GET", getApiRoute("trendsetters/" + lat + "/" + lng + "?" + serializeQueryString(options)));
+        },
+
+        "network": function () {
+            return Meteor.http.call("GET", getApiRoute("user/network/feed?"))
         }
     });
 

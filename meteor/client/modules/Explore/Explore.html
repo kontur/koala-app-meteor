@@ -1,0 +1,22 @@
+<template name="Explore">
+    <header>Explore</header>
+    <h1><a href="/explore/food">Restaurants</a></h1>
+    {{#each top_food}}
+    {{>VenueCover}}
+    {{/each}}
+
+    <h1><a href="/explore/nightlife">Bars</a></h1>
+    {{#each top_nightlife}}
+    {{>VenueCover}}
+    {{/each}}
+
+    <h1><a href="/explore/cafes">Cafes</a></h1>
+    {{#each top_cafes}}
+    {{>VenueCover}}
+    {{/each}}
+
+    <h1><a href="/explore/hotels">Hotels</a></h1>
+    {{#each top_hotels}}
+    {{>VenueCover}}
+    {{/each}}
+</template>

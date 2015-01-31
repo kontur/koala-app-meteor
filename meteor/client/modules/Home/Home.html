@@ -1,0 +1,24 @@
+<template name="Home">
+    <header>Home</header>
+    <h1>Popular around here</h1>
+    {{#each popular}}
+        {{>VenueCover}}
+    {{/each}}
+
+    <h1>Hot venues around the globe</h1>
+    {{#each trending}}
+        {{>VenueCover}}
+    {{/each}}
+
+    <h1>Trendsetters to follow</h1>
+    {{#each trendsetters}}
+        {{>UserRecent}}
+    {{/each}}
+
+    <h1>Your friends activity</h1>
+
+    {{#each network}}
+        You're friend {{username}} [has been to/rated/left a tip for] [venue]<br>
+        {{>Image}}
+    {{/each}}
+</template>

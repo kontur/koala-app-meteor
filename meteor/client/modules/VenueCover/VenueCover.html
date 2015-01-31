@@ -11,7 +11,9 @@
             {{/with}}
         </span>
         <span>Rating {{venue.rating}}</span>
-        <span>Distance: 0.X km</span>
+
+        <span>{{venue.location.city}}, {{venue.location.country}}</span>
+        <span>Distance: {{venue.location.distance}} m</span>
 
         {{#with instagram}}
             {{>Image}}

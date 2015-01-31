@@ -875,6 +875,11 @@ h5 > a,
 h6 > a {
   color: inherit;
 }
+main > h1 {
+  border-left: 0.5em solid #d0021b;
+  margin-left: -1em;
+  padding-left: 0.4em;
+}
 a {
   text-decoration: none;
 }
