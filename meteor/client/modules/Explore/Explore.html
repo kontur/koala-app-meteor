@@ -2,21 +2,29 @@
     <header>Explore</header>
     <h1><a href="/explore/food">Restaurants</a></h1>
     {{#each top_food}}
-    {{>VenueCover}}
+        {{>VenueCover}}
+    {{else}}
+        {{>LoadingAjax}}
     {{/each}}
 
     <h1><a href="/explore/nightlife">Bars</a></h1>
     {{#each top_nightlife}}
-    {{>VenueCover}}
+        {{>VenueCover}}
+    {{else}}
+        {{>LoadingAjax}}
     {{/each}}
 
     <h1><a href="/explore/cafes">Cafes</a></h1>
     {{#each top_cafes}}
-    {{>VenueCover}}
+        {{>VenueCover}}
+    {{else}}
+        {{>LoadingAjax}}
     {{/each}}
 
     <h1><a href="/explore/hotels">Hotels</a></h1>
     {{#each top_hotels}}
-    {{>VenueCover}}
+        {{>VenueCover}}
+    {{else}}
+        {{>LoadingAjax}}
     {{/each}}
 </template>
