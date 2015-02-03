@@ -961,3 +961,6 @@ img {
   display: inline !important;
   padding: 0.05em 0.25em 0.15em;
 }
+#login-wrapper {
+  text-align: center;
+}

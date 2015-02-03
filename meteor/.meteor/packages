@@ -7,9 +7,9 @@
 meteor-platform
 bozhao:accounts-instagram
 service-configuration
-accounts-ui
 http
 iron:router
 reactive-var
 mdg:geolocation
 underscore
+accounts-password

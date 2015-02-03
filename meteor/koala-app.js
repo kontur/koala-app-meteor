@@ -19,6 +19,19 @@ if (Meteor.isClient) {
         },
         "click #nav a": function (e) {
             $("#nav").removeClass("open");
+        },
+        "click .user-logout": function (e) {
+            Meteor.logout();
+        },
+        "click .user-login": function (e) {
+            console.log("hello login");
+            Meteor.loginWithInstagram(function (err, res) {
+                console.log(err, res);
+                if (err !== undefined)
+                    console.log('sucess ' + res)
+                else
+                    console.log('login failed ' + err)
+            });
         }
     });
 
@@ -73,7 +86,7 @@ if (Meteor.isServer) {
         },
 
         "network": function () {
-            return Meteor.http.call("GET", getApiRoute("user/network/feed?"))
+            return Meteor.http.call("GET", getApiRoute("user/network/feed?"));
         }
     });
 

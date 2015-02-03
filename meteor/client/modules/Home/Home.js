@@ -55,7 +55,6 @@ if (Meteor.isClient) {
         });
 
         Meteor.call("network", function (err, res) {
-            console.log(err, res, JSON.parse(res.content));
             if (err) {
                 Session.set("errors", _.union(Session.get("errors"), [err]));
                 return;
