@@ -905,6 +905,13 @@ img {
   max-width: 100%;
   vertical-align: top;
 }
+.warning {
+  border: 1px solid red;
+  border-radius: 0.5em;
+  color: red;
+  padding: 0.5em 1em 0.25em;
+  margin: 1em;
+}
 .venue-cover {
   clear: both;
   float: left;

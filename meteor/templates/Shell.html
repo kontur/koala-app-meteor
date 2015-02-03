@@ -20,7 +20,7 @@
     </nav>
 
     {{#if errors}}
-    <div id="errors">
+    <div id="errors" class="warning">
         <strong>Errors:</strong>
         {{#each errors}}
         <p>{{this.message}}</p>
@@ -30,6 +30,11 @@
         {{/each}}
     </div>
     {{/if}}
+
+
+    {{#unless geolocation}}
+        <div class="warning">{{>NoGeolocation}}</div>
+    {{/unless}}
 
     <main>
         {{>yield "main"}}

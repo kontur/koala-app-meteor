@@ -3,12 +3,19 @@ if (Meteor.isClient) {
     Meteor.subscribe("users");
     console.log("startup", Meteor.user());
 
+
     Template.Shell.helpers({
         username: function () {
             return Meteor.user().services.instagram.username;
         },
         errors: function () {
             return Session.get("errors");
+        },
+
+        // any geolocation call should store the geolocation result in this session var
+        // if it's not available there's a warning message in the Shell.html template
+        geolocation: function () {
+            return Session.get("geolocation");
         }
     });
 

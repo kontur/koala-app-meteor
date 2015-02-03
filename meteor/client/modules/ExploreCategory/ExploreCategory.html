@@ -1,12 +1,8 @@
 <template name="ExploreCategory">
     <header>Top [{{category}}]</header>
-    {{#if geolocation}}
-        {{#each venues}}
-            {{>VenueCover}}
-        {{else}}
-            {{>LoadingAjax}}
-        {{/each}}
+    {{#each venues}}
+        {{>VenueCover}}
     {{else}}
-        {{>NoGeolocation}}
-    {{/if}}
+        {{>LoadingAjax}}
+    {{/each}}
 </template>
