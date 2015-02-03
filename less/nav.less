@@ -1,18 +1,15 @@
 
-nav#nav {
+nav.fly-out {
   background: white;
   position: fixed;
   top: 2.5em;
-  left: 0;
   height: 100%;
   width: 100%;
   z-index: 200;
-
-  transform: translateX(-100%);
   .transition(all 0.25s ease-in-out);
 
   &.open {
-    transform: translateX(0)
+    transform: translateX(0) !important;
   }
 
   li {
@@ -32,4 +29,15 @@ nav#nav {
       background: @greyLight;
     }
   }
+}
+
+nav#nav {
+  left: 0;
+  transform: translateX(-100%);
+
+}
+
+nav#user-nav {
+  left: 0;
+  transform: (translateX(100%));
 }

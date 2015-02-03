@@ -1,17 +1,21 @@
 <template name="Shell">
     {{#if currentUser}}
-    <button class="user-logout">Log out</button>
     <header id="header">
         <div id="header-bar">
             <button class="menu-toggle"><i class="glyphicon glyphicon-menu-hamburger"></i></button>
             <button class="user-toggle"><i class="glyphicon glyphicon-user"></i></button>
         </div>
     </header>
-    <nav id="nav">
+    <nav id="nav" class="fly-out">
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/explore">Explore</a></li>
             <li><a href="/search">Search</a></li>
+        </ul>
+    </nav>
+    <nav id="user-nav" class="fly-out">
+        <ul>
+            <li><button class="user-logout">Log out</button></li>
         </ul>
     </nav>
 

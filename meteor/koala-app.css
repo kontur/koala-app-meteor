@@ -812,26 +812,24 @@ header#header #header-bar button {
 header#header #header-bar .user-toggle {
   float: right;
 }
-nav#nav {
+nav.fly-out {
   background: white;
   position: fixed;
   top: 2.5em;
-  left: 0;
   height: 100%;
   width: 100%;
   z-index: 200;
-  transform: translateX(-100%);
   -webkit-transition: all 0.25s ease-in-out;
   -o-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
 }
-nav#nav.open {
-  transform: translateX(0);
+nav.fly-out.open {
+  transform: translateX(0) !important;
 }
-nav#nav li {
+nav.fly-out li {
   display: block;
 }
-nav#nav a {
+nav.fly-out a {
   color: #d0021b;
   display: block;
   padding: 0.5em 1em 0.25em;
@@ -839,10 +837,18 @@ nav#nav a {
   border-bottom: 1px solid #aaaaaa;
   text-transform: uppercase;
 }
-nav#nav a:hover,
-nav#nav a:focus {
+nav.fly-out a:hover,
+nav.fly-out a:focus {
   border-bottom: 1px solid #d0021b;
   background: #aaaaaa;
+}
+nav#nav {
+  left: 0;
+  transform: translateX(-100%);
+}
+nav#user-nav {
+  left: 0;
+  transform: translateX(100%);
 }
 html,
 body {
