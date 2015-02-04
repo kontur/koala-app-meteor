@@ -73,7 +73,7 @@ if (Meteor.isServer) {
                 limit: 3
             };
 
-            if (opt.category) {
+            if (opt && opt.category) {
                 category = opt.category;
                 delete opt.category;
             }

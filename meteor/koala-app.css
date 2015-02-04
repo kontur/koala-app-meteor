@@ -977,3 +977,13 @@ img {
 #login-wrapper {
   text-align: center;
 }
+.map-container {
+  height: 400px;
+  width: 100%;
+}
+.map-container img {
+  height: auto;
+  width: auto;
+  max-width: auto;
+  max-height: auto;
+}

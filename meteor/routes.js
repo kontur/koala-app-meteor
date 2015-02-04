@@ -4,9 +4,15 @@ Router.configure({
 //    notFoundTemplate: "notFound",
 });
 
+
 Router.onBeforeAction(function (req, res, next) {
     // reset error message array before showing next view
     Session.set("errors", null);
+
+    // fetch geolocation into session for any router (TODO be more selective about this?)
+    navigator.geolocation.getCurrentPosition(function (position) {
+        Session.set("geolocation", position);
+    });
     this.next();
 });
 
@@ -20,6 +26,19 @@ Router.route("/explore", function () {
     this.render("Explore", {
         to: "main"
     });
+});
+
+Router.route("/map", {
+    onBeforeAction: function () {
+        console.log("onBeforeMap");
+        GoogleMaps.load();
+        this.next();
+    },
+    action: function () {
+        this.render("Map", {
+            to: "main"
+        });
+    }
 });
 
 Router.route("/explore/:category", function () {
