@@ -982,8 +982,5 @@ img {
   width: 100%;
 }
 .map-container img {
-  height: auto;
-  width: auto;
-  max-width: auto;
-  max-height: auto;
+  max-width: none;
 }

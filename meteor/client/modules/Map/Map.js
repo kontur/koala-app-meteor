@@ -6,9 +6,10 @@ if (Meteor.isClient) {
         this.selected = new ReactiveVar();
     };
 
-    Template.Map.rendered = function () {
-        var tpl = Template.instance();
+    Template.Map.rendered = updateMap;
 
+    function updateMap() {
+        var tpl = Template.instance();
 
         navigator.geolocation.getCurrentPosition(function (position) {
             Session.set("geolocation", position);
@@ -18,33 +19,43 @@ if (Meteor.isClient) {
                     Session.set("errors", _.union(Session.get("errors"), [err]));
                     return;
                 }
-                tpl.venues.set(JSON.parse(res.content));
-                _.each(tpl.venues.get(), function (elem, index) {
 
+                console.log("to union: ", JSON.parse(res.content), tpl.venues.get());
+
+                tpl.venues.set(_.union(JSON.parse(res.content)), tpl.venues.get());
+
+                // set markers for all retrieved venues
+                _.each(tpl.venues.get(), function (elem, index) {
                     if (index == 0) {
                         console.log("Selected", elem);
                         tpl.selected.set(elem);
                     }
 
-                    console.log(elem);
-                    var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
-                        map: GoogleMaps.maps.exampleMap.instance,
-                        icon: elem.venue.categories[0].icon.prefix + "64" + elem.venue.categories[0].icon.suffix,
-                        venue_id: elem.venue.id
-                    });
+                    if (!elem.hasMarker) {
 
-                    google.maps.event.addListener(marker, "click", function () {
-                        console.log("hello marker", this, tpl);
-                        var id = this.venue_id;
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
+                            map: GoogleMaps.maps.exampleMap.instance,
+                            icon: elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix,
+                            venue_id: elem.venue.id,
+                            title: elem.venue.name
+                        });
 
-                        tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
-                            console.log("_find found", elem);
-                            return elem.venue.id == id;
-                        }));
-                        //tpl.selected = tpl.venues.venue.id search... this.id
-                    });
+                        google.maps.event.addListener(marker, "click", function () {
+                            var id = this.venue_id;
+
+                            // TODO try catch
+                            tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
+//                                console.log("_find found", elem);
+                                return elem.venue.id == id;
+                            }));
+                        });
+
+                        elem.hasMarker = true;
+                    }
                 });
+
+                console.log("after each", tpl.venues.get());
             });
         });
     };
@@ -60,19 +71,30 @@ if (Meteor.isClient) {
                         position: map.options.center,
                         map: map.instance
                     });
+                    google.maps.event.addListener(map.instance, "center_changed", function () {
+                        console.log("hello center_changed");
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                            console.log("hello position", position);
+                            Session.set("geolocation", position);
 
-
-                    google.maps.event.addListener(map, "center_changed", function() {
-                        console.log("map center changed");
+                            var marker = new google.maps.Marker({
+                                position: new google.maps.LatLng(60, 24),
+                                map: GoogleMaps.maps.exampleMap.instance
+                            });
+                        });
                     });
 
+                    //_.debounce(updateMap, 500));
                 });
 
 
+                var coords = Session.get("geolocation").coords;
                 // Map initialization options
                 return {
-                    center: new google.maps.LatLng(Session.get("geolocation").coords.latitude, Session.get("geolocation").coords.longitude),
-                    zoom: 13
+//                    center: new google.maps.LatLng(Session.get("geolocation").coords.latitude, Session.get("geolocation").coords.longitude),
+                    center: new google.maps.LatLng(coords.latitude, coords.longitude),
+                    zoom: 13,
+                    disableDefaultUI: true
                 };
             }
         },
