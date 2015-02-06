@@ -6,93 +6,121 @@ if (Meteor.isClient) {
         this.selected = new ReactiveVar();
     };
 
-    Template.Map.rendered = updateMap;
 
-    function updateMap() {
+
+    // somehow _.debounce just makes a mess here...
+    var updateMapLastCall = Date.now();
+
+    Template.Map.rendered = function () {
         var tpl = Template.instance();
-
         navigator.geolocation.getCurrentPosition(function (position) {
             Session.set("geolocation", position);
+            updateMap(position.coords, tpl);
 
-            Meteor.call("venues", position.coords.latitude, position.coords.longitude, { limit: 3 }, function (err, res) {
-                if (err) {
-                    Session.set("errors", _.union(Session.get("errors"), [err]));
-                    return;
-                }
+            // when current user position resolved, add marker wrapped in map ready function
+            if (GoogleMaps.loaded()) {
+                GoogleMaps.ready("exampleMap", function () {
+                    // Add a marker to the map once it"s ready
+                    var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    var here = new google.maps.Marker({
+                        position: pos,
+                        map: GoogleMaps.maps.exampleMap.instance
+                    });
 
-                console.log("to union: ", JSON.parse(res.content), tpl.venues.get());
+                    google.maps.event.addListener(GoogleMaps.maps.exampleMap.instance, "center_changed", function () {
+                        console.log("center_changed");
+                        if (updateMapLastCall + 1000 < Date.now()) {
+                            updateMapLastCall = Date.now();
+                            updateMap({
+                                    "latitude": this.getCenter().lat(),
+                                    "longitude": this.getCenter().lng()
+                                },
+                                tpl);
+                        }
+                    });
 
-                tpl.venues.set(_.union(JSON.parse(res.content)), tpl.venues.get());
+                });
+            }
+        });
+    };
 
-                // set markers for all retrieved venues
-                _.each(tpl.venues.get(), function (elem, index) {
-                    if (index == 0) {
-                        console.log("Selected", elem);
-                        tpl.selected.set(elem);
-                    }
 
-                    if (!elem.hasMarker) {
+    /**
+     *
+     * @param position Object{latitude, longitude}
+     */
+    function updateMap(position, tpl) {
+        console.log("updateMap", position, tpl);
 
-                        var marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
-                            map: GoogleMaps.maps.exampleMap.instance,
-                            icon: elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix,
-                            venue_id: elem.venue.id,
-                            title: elem.venue.name
-                        });
+        GoogleMaps.maps.exampleMap.instance.setCenter(new google.maps.LatLng(position.latitude, position.longitude));
 
-                        google.maps.event.addListener(marker, "click", function () {
-                            var id = this.venue_id;
+//        Session.set("mapcenter", position);
 
-                            // TODO try catch
-                            tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
-//                                console.log("_find found", elem);
-                                return elem.venue.id == id;
-                            }));
-                        });
+        Meteor.call("venues", position.latitude, position.longitude, { limit: 3 }, function (err, res) {
+            console.log("venues call", err, res, JSON.parse(res.content));
+            if (err) {
+                Session.set("errors", _.union(Session.get("errors"), [err]));
+                return;
+            }
 
-                        elem.hasMarker = true;
+            var responseVenues = JSON.parse(res.content);
+            var currentVenues = tpl.venues.get();
+
+            // if there is already previously found venues on the map
+            if (currentVenues) {
+                _.each(currentVenues, function (currentVenue) {
+                    // if any of the found vneues is already in the current venues don't add it
+                    var inArrayAlready = _.find(responseVenues, function (responseVenue) {
+                        return responseVenue.venue.id == currentVenue.venue.id;
+                    });
+
+                    if (!inArrayAlready) {
+                        responseVenues.push(currentVenue);
                     }
                 });
+            }
+            tpl.venues.set(responseVenues);
 
-                console.log("after each", tpl.venues.get());
+
+            // set markers for all retrieved venues
+            _.each(tpl.venues.get(), function (elem, index) {
+                if (index == 0) {
+                    // TODO highlight current venue
+                    tpl.selected.set(elem);
+                }
+
+                if (!elem.hasMarker) {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
+                        map: GoogleMaps.maps.exampleMap.instance,
+                        icon: elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix,
+                        venue_id: elem.venue.id,
+                        title: elem.venue.name
+                    });
+
+                    google.maps.event.addListener(marker, "click", function () {
+                        var id = this.venue_id;
+
+                        // TODO try catch
+                        tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
+                            return elem.venue.id == id;
+                        }));
+                    });
+
+                    elem.hasMarker = true;
+                }
             });
         });
     };
 
     Template.Map.helpers({
         "exampleMapOptions": function () {
+            var tpl = Template.instance();
+
             // Make sure the maps API has loaded
             if (GoogleMaps.loaded()) {
-                // We can use the `ready` callback to interact with the map API once the map is ready.
-                GoogleMaps.ready("exampleMap", function (map) {
-                    // Add a marker to the map once it"s ready
-                    var here = new google.maps.Marker({
-                        position: map.options.center,
-                        map: map.instance
-                    });
-                    google.maps.event.addListener(map.instance, "center_changed", function () {
-                        console.log("hello center_changed");
-                        navigator.geolocation.getCurrentPosition(function (position) {
-                            console.log("hello position", position);
-                            Session.set("geolocation", position);
-
-                            var marker = new google.maps.Marker({
-                                position: new google.maps.LatLng(60, 24),
-                                map: GoogleMaps.maps.exampleMap.instance
-                            });
-                        });
-                    });
-
-                    //_.debounce(updateMap, 500));
-                });
-
-
-                var coords = Session.get("geolocation").coords;
-                // Map initialization options
                 return {
-//                    center: new google.maps.LatLng(Session.get("geolocation").coords.latitude, Session.get("geolocation").coords.longitude),
-                    center: new google.maps.LatLng(coords.latitude, coords.longitude),
+                    center: new google.maps.LatLng(0, 0),
                     zoom: 13,
                     disableDefaultUI: true
                 };
