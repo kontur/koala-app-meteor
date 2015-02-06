@@ -1,4 +1,7 @@
 {
+    "public": {
+        "icons": ""
+    },
     api: "",
     instagramClientId: "",
     instagramClientSecret: ""

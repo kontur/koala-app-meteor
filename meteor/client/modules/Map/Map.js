@@ -7,7 +7,6 @@ if (Meteor.isClient) {
     };
 
 
-
     // somehow _.debounce just makes a mess here...
     var updateMapLastCall = Date.now();
 
@@ -54,8 +53,6 @@ if (Meteor.isClient) {
 
         GoogleMaps.maps.exampleMap.instance.setCenter(new google.maps.LatLng(position.latitude, position.longitude));
 
-//        Session.set("mapcenter", position);
-
         Meteor.call("venues", position.latitude, position.longitude, { limit: 3 }, function (err, res) {
             console.log("venues call", err, res, JSON.parse(res.content));
             if (err) {
@@ -93,14 +90,16 @@ if (Meteor.isClient) {
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
                         map: GoogleMaps.maps.exampleMap.instance,
-                        icon: elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix,
+                        icon: Meteor.settings.public["icons"] +
+                            "90,70,30/" +
+                            encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix),
                         venue_id: elem.venue.id,
                         title: elem.venue.name
                     });
 
                     google.maps.event.addListener(marker, "click", function () {
                         var id = this.venue_id;
-
+                        colorMarker(this, "230, 50, 30", encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix));
                         // TODO try catch
                         tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
                             return elem.venue.id == id;
@@ -111,6 +110,11 @@ if (Meteor.isClient) {
                 }
             });
         });
+    };
+
+
+    function colorMarker(marker, colorStr, iconStr) {
+        marker.setIcon(Meteor.settings.public["icons"] + colorStr + "/" + iconStr);
     };
 
     Template.Map.helpers({
