@@ -15,7 +15,8 @@
         <span>{{venue.location.city}}, {{venue.location.country}}</span>
         <span>Distance: {{venue.location.distance}} m</span>
 
-        {{#with instagram}}
+        {{#with instagram.[0]}}
+            {{instagram.[0]}}
             {{>Image}}
         {{/with}}
     </div>
