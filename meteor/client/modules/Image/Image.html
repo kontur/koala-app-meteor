@@ -1,46 +1,47 @@
-
-
 <template name="Image">
     <div class="image">
-        <div class="image-user user-avatar">
-            <a href="/user/{{user}}">
-                <img src="{{user_profile}}">
-                <span>{{user}}</span>
-            </a>
-        </div>
-        <img src="{{image}}">
-        <div class="image-meta">
-            {{#if comments_count}}
-            <div class="image-comments">
-                <span>{{comments_count}} comments</span>
-                <span><button class="view-comments">view</button></span>
-                <span><button>comment</button></span>
+        <div class="image-wrapper">
+            <div class="image-user user-avatar">
+                <a href="/user/{{user}}">
+                    <img src="{{user_profile}}">
+                    <span>{{user}}</span>
+                </a>
             </div>
-            {{/if}}
+            <img src="{{image}}">
+        </div>
+        <div class="image-meta">
             {{#if likes}}
             <div class="image-likes">
-                <span>{{likes}} likes</span>
-                <span><button>like</button></span>
+                <span><i class="glyphicon glyphicon-heart"></i> {{likes}} likes</span>
+                <!--<span><button>like</button></span>-->
             </div>
             {{/if}}
         </div>
 
-        {{#if comments}}
         <div class="image-comments">
-            Comments:
-            {{#each comments}}
-                {{>ImageComment}}
-            {{/each}}
+            <i class="glyphicon glyphicon-comment"></i>
+            <div class="image-comments-wrapper">
+                {{#if comments}}
+                    {{#each comments}}
+                    {{>ImageComment}}
+                    {{/each}}
+                {{else}}
+                    <span class="no-comments">No comments yet</span>
+                {{/if}}
+            </div>
         </div>
-        {{/if}}
+
+        <div class="image-actions">
+            <span><button><i class="glyphicon glyphicon-heart"></i> Like</button></span>
+            <span><button><i class="glyphicon glyphicon-comment"></i> Comment</button></span>
+        </div>
     </div>
 </template>
 
 
 <template name="ImageComment">
-    <div class="user-avatar">
-        <img src="{{profile_picture}}">
-        <span>{{username}}</span>
+    <div class="image-comment">
+        <span class="image-comment-user">{{username}}:</span>
+        <span class="image-comment-text">{{text}}</span>
     </div>
-    {{text}}
 </template>

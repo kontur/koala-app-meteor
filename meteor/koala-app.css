@@ -850,13 +850,94 @@ nav#user-nav {
   left: 0;
   transform: translateX(100%);
 }
+.venue-cover {
+  clear: both;
+  float: left;
+  margin: 0 0 3em;
+  width: 100%;
+  color: #aaaaaa;
+  font-size: 0.8em;
+}
+.venue-cover img {
+  width: 100%;
+}
+.venue-cover h1 {
+  float: left;
+}
+.venue-cover .meta {
+  float: right;
+  font-size: smaller;
+  margin: 0.5em 0 0;
+}
+.venue-cover .meta span {
+  margin: 0 0.5em;
+}
+.image {
+  clear: both;
+  position: relative;
+}
+.image .image-wrapper {
+  position: relative;
+}
+.image .image-wrapper .image-user {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  text-align: right;
+  z-index: 2;
+}
+.image .image-wrapper .image-user img {
+  float: right;
+}
+.image .image-meta {
+  color: #aaaaaa;
+  font-size: smaller;
+}
+.image .image-meta > div {
+  display: block;
+  margin: 1em 0.5em;
+  padding: 0.05em 0.25em 0em;
+}
+.image .image-meta .glyphicon {
+  margin-right: 0.2em;
+}
+.image .image-comments {
+  padding: 0 0.6em 0.5em;
+  position: relative;
+  font-size: smaller;
+}
+.image .image-comments > .glyphicon {
+  position: absolute;
+  top: 0em;
+  left: 0.75em;
+}
+.image .image-comments .image-comments-wrapper {
+  padding-left: 1.75em;
+}
+.image .image-comments .image-comment:nth-child(n+4) {
+  display: none;
+}
+.image .image-comments .image-comment {
+  clear: both;
+  margin-bottom: 0.5em;
+}
+.image .image-comments .image-comment .image-comment-user {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  font-weight: 600;
+}
+.image .image-actions {
+  clear: both;
+  margin: 0.5em 0;
+}
 html,
 body {
   margin: 0;
   padding: 0;
 }
 body {
-  font-family: sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
   margin-top: 2.5em;
 }
 body > header {
@@ -868,9 +949,11 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: 'Slabo 27px', serif;
   color: #d0021b;
   clear: both;
   font-size: 1em;
+  margin-top: 0.25em;
   text-transform: uppercase;
 }
 h1 > a,
@@ -887,7 +970,21 @@ main > h1 {
   padding-left: 0.4em;
 }
 a {
+  color: #0066aa;
   text-decoration: none;
+}
+button {
+  border: 1px solid #0066aa;
+  border-radius: 0.25em;
+  background: white;
+  color: #0066aa;
+  font: inherit;
+  padding: 0.2em 0.75em 0.3em;
+  margin: 0.2em 0.5em;
+}
+button .glyphicon {
+  margin: 0 0.35em 0 0;
+  font-size: smaller;
 }
 q {
   font-style: italic;
@@ -896,9 +993,6 @@ ul {
   padding: 0;
   margin: 0;
   list-style: none;
-}
-main {
-  padding: 1em;
 }
 img {
   height: auto;
@@ -912,19 +1006,6 @@ img {
   padding: 0.5em 1em 0.25em;
   margin: 1em;
 }
-.venue-cover {
-  clear: both;
-  float: left;
-  margin: 0 0 1em;
-  width: 100%;
-}
-.venue-cover img {
-  width: 100%;
-}
-.venue-cover .meta {
-  color: #aaaaaa;
-  font-size: 0.8em;
-}
 .venue-information {
   color: #aaaaaa;
   font-size: smaller;
@@ -936,36 +1017,23 @@ img {
 .venue-information .venue-tips li:nth-child(n+4) {
   display: none;
 }
-.image {
-  position: relative;
-}
-.image .image-user {
-  position: absolute;
-  top: 1em;
-  right: 1em;
-  text-align: right;
-  z-index: 2;
-}
-.image .image-user img {
-  float: right;
-}
-.image .image-meta {
-  color: #aaaaaa;
-  font-size: smaller;
-}
-.image .image-meta > div {
-  display: block;
-  margin: 0.5em;
-  padding: 0.05em 0.25em 0.15em;
-}
 .user-avatar img {
   border-radius: 100%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
   display: block;
   height: auto;
   width: 50px;
 }
 .user-avatar span {
   display: block;
+}
+.user-avatar a {
+  color: #aaaaaa;
+}
+.venue-icon {
+  max-width: 1.5em;
+  position: relative;
+  margin-top: -0.15em;
 }
 .tag {
   background: #aaaaaa;

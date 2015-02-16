@@ -45,7 +45,8 @@ if (Meteor.isClient) {
                     {
                         limit: 1,
                         offset: offset,
-                        images: 1
+                        images: 1,
+                        comments: 0 // no comments requested in initial call, only after load to minimize load time
                     },
                     function (err, res) {
                     if (err) {

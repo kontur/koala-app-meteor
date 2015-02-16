@@ -1,3 +1,17 @@
+.text() {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+}
+
+.textBold() {
+  .text();
+  font-weight: 600;
+}
+
+.heading() {
+  font-family: 'Slabo 27px', serif;
+}
+
 @import "../bower_components/bootstrap/less/variables.less";
 @import "../bower_components/bootstrap/less/mixins/vendor-prefixes.less";
 
@@ -8,8 +22,12 @@
 @import "header.less";
 @import "nav.less";
 
+@import "venue-cover.less";
+@import "image.less";
+
 @red: #d0021b;
 @greyLight: #aaa;
+@link: #0066aa;
 
 html, body {
   margin: 0;
@@ -17,7 +35,7 @@ html, body {
 }
 
 body {
-  font-family: sans-serif;
+  .text();
   margin-top: 2.5em;
 
   > header {
@@ -31,9 +49,11 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  .heading();
   color: @red;
   clear: both;
   font-size: 1em;
+  margin-top: 0.25em;
   text-transform: uppercase;
   > a {
     color: inherit;
@@ -47,7 +67,22 @@ main > h1 {
 }
 
 a {
+  color: @link;
   text-decoration: none;
+}
+
+button {
+  border: 1px solid @link;
+  border-radius: 0.25em;
+  background: white;
+  color: @link;
+  font: inherit;
+  padding: 0.2em 0.75em 0.3em;
+  margin: 0.2em 0.5em;
+  .glyphicon {
+    margin: 0 0.35em 0 0;
+    font-size: smaller;
+  }
 }
 
 q {
@@ -61,7 +96,7 @@ ul {
 }
 
 main {
-  padding: 1em;
+  //  padding: 1em;
 }
 
 img {
@@ -86,23 +121,6 @@ img {
   margin: 1em;
 }
 
-// Explore overview venue preview
-.venue-cover {
-  clear: both;
-  float: left;
-  margin: 0 0 1em;
-  width: 100%;
-
-  img {
-    width: 100%;
-  }
-
-  .meta {
-    color: @greyLight;
-    font-size: 0.8em;
-  }
-}
-
 // Venue view
 .venue-information {
   .font-smaller();
@@ -123,34 +141,11 @@ img {
 
 }
 
-// Any one instagram image
-.image {
-  position: relative;
-  .image-user {
-    position: absolute;
-    top: 1em;
-    right: 1em;
-    text-align: right;
-    z-index: 2;
-    img {
-      float: right;
-    }
-  }
-
-  .image-meta {
-    .font-smaller();
-    > div {
-      display: block;
-      margin: 0.5em;
-      padding: 0.05em 0.25em 0.15em;
-    }
-  }
-}
-
 // Generic user avatar + name
 .user-avatar {
   img {
     border-radius: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.25);
     display: block;
     height: auto;
     width: 50px;
@@ -158,6 +153,16 @@ img {
   span {
     display: block;
   }
+  a {
+    color: @greyLight;
+  }
+}
+
+// venue cover and other venue icons
+.venue-icon {
+  max-width: 1.5em;
+  position: relative;
+  margin-top: -0.15em;
 }
 
 // Generic tag style
@@ -183,3 +188,4 @@ img {
     max-width: none;
   }
 }
+

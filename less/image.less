@@ -1,0 +1,67 @@
+// Any one instagram image
+.image {
+  clear: both;
+  position: relative;
+  
+  .image-wrapper {
+    position: relative;
+    .image-user {
+      position: absolute;
+      bottom: 1em;
+      right: 1em;
+      text-align: right;
+      z-index: 2;
+      img {
+        float: right;
+      }
+    }
+  }
+
+  .image-meta {
+    .font-smaller();
+    > div {
+      display: block;
+      margin: 1em 0.5em;
+      padding: 0.05em 0.25em 0em;
+    }
+
+    .glyphicon {
+      margin-right: 0.2em;
+    }
+  }
+
+  .image-comments {
+    padding: 0 0.6em 0.5em;
+    position: relative;
+    font-size: smaller;
+
+    > .glyphicon {
+      position: absolute;
+      top: 0em;
+      left: 0.75em;
+    }
+
+    .image-comments-wrapper {
+      padding-left: 1.75em;
+    }
+
+    // hide all after the 3rd
+    .image-comment:nth-child(n+4) {
+      display: none;
+    }
+
+    .image-comment {
+      clear: both;
+      margin-bottom: 0.5em;
+
+      .image-comment-user {
+        .textBold();
+      }
+    }
+  }
+
+  .image-actions {
+    clear: both;
+    margin: 0.5em 0;
+  }
+}
