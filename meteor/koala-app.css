@@ -875,6 +875,7 @@ nav#user-nav {
 .image {
   clear: both;
   position: relative;
+  margin-bottom: 3em;
 }
 .image .image-wrapper {
   position: relative;
@@ -890,8 +891,8 @@ nav#user-nav {
   float: right;
 }
 .image .image-meta {
-  color: #aaaaaa;
   font-size: smaller;
+  color: #aaaaaa;
 }
 .image .image-meta > div {
   display: block;
@@ -907,6 +908,7 @@ nav#user-nav {
   font-size: smaller;
 }
 .image .image-comments > .glyphicon {
+  color: #aaaaaa;
   position: absolute;
   top: 0em;
   left: 0.75em;
@@ -928,7 +930,79 @@ nav#user-nav {
 }
 .image .image-actions {
   clear: both;
-  margin: 0.5em 0;
+  font-size: 0.8em;
+  margin: 0.5em 0 0.5em 1.8em;
+}
+.image-alt .image-wrapper .image-user {
+  position: relative;
+  bottom: auto;
+  top: auto;
+  right: auto;
+  text-align: left;
+  margin: 0 0 1em 0.5em;
+}
+.image-alt .image-wrapper .image-user span {
+  position: relative;
+  top: 0.1em;
+  left: 0.5em;
+}
+.image-alt .image-wrapper .image-user img {
+  float: left;
+  max-width: 25px;
+}
+.image-alt .image-wrapper .image-time {
+  color: #aaaaaa;
+  position: absolute;
+  right: 0.75em;
+  top: 0.35em;
+  font-size: smaller;
+}
+.venue > header {
+  text-align: center;
+  margin: 5em 0 0.5em;
+}
+.venue > header .meta {
+  font-size: smaller;
+  margin: 2em 0 0;
+}
+.venue > header .meta span {
+  margin: 0 0.5em;
+}
+.venue .venue-description {
+  padding: 0 2em;
+  text-align: center;
+  margin: 0 0 2em;
+}
+.venue .venue-info {
+  overflow: hidden;
+  margin: 0 0 2em;
+}
+.venue .venue-info > div {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  float: left;
+  font-size: smaller;
+  padding: 0 1em;
+  width: 50%;
+}
+.venue .venue-info > div > span {
+  display: block;
+  position: relative;
+  padding-left: 2em;
+  margin: 0 0 0.5em;
+}
+.venue .venue-info > div > span > .glyphicon {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.venue .venue-info > div > span > span {
+  display: block;
+}
+.venue-images h1 {
+  padding: 0 0 0 0.75em;
 }
 html,
 body {
@@ -938,6 +1012,7 @@ body {
 body {
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 300;
+  color: #555555;
   margin-top: 2.5em;
 }
 body > header {
@@ -1051,4 +1126,29 @@ img {
 }
 .map-container img {
   max-width: none;
+}
+nav.tabs {
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
+  clear: both;
+  margin: 1em 0;
+  overflow: hidden;
+  text-align: center;
+}
+nav.tabs button {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 0;
+  border-color: #aaaaaa;
+  margin: 0;
+  border-top: 0;
+  border-bottom: 0;
+  border-right: 0;
+  display: block;
+  float: left;
+  width: 33.33%;
+}
+nav.tabs button:first-child {
+  border-left: 0;
 }

@@ -2,7 +2,8 @@
 .image {
   clear: both;
   position: relative;
-  
+  margin-bottom: 3em;
+
   .image-wrapper {
     position: relative;
     .image-user {
@@ -19,6 +20,8 @@
 
   .image-meta {
     .font-smaller();
+    color: @greyLight;
+
     > div {
       display: block;
       margin: 1em 0.5em;
@@ -36,6 +39,7 @@
     font-size: smaller;
 
     > .glyphicon {
+      color: @greyLight;
       position: absolute;
       top: 0em;
       left: 0.75em;
@@ -62,6 +66,39 @@
 
   .image-actions {
     clear: both;
-    margin: 0.5em 0;
+    font-size: 0.8em;
+    margin: 0.5em 0 0.5em 1.8em;
+  }
+}
+
+.image-alt {
+  .image-wrapper {
+    .image-user {
+      position: relative;
+      bottom: auto;
+      top: auto;
+      right: auto;
+      text-align: left;
+      margin: 0 0 1em 0.5em;
+
+      span {
+        position: relative;
+        top: 0.1em;
+        left: 0.5em;
+      }
+
+      img {
+        float: left;
+        max-width: 25px;
+      }
+    }
+
+    .image-time {
+      color: @greyLight;
+      position: absolute;
+      right: 0.75em;
+      top: 0.35em;
+      font-size: smaller;
+    }
   }
 }

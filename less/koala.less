@@ -24,9 +24,11 @@
 
 @import "venue-cover.less";
 @import "image.less";
+@import "venue.less";
 
 @red: #d0021b;
 @greyLight: #aaa;
+@greyDark: #555;
 @link: #0066aa;
 
 html, body {
@@ -36,6 +38,7 @@ html, body {
 
 body {
   .text();
+  color: @greyDark;
   margin-top: 2.5em;
 
   > header {
@@ -186,6 +189,33 @@ img {
 
   img {
     max-width: none;
+  }
+}
+
+nav.tabs {
+  border-top: 1px solid @greyLight;
+  border-bottom: 1px solid @greyLight;
+  clear: both;
+  margin: 1em 0;
+  overflow: hidden;
+  text-align: center;
+
+  button {
+    .box-sizing(border-box);
+    border-radius: 0;
+    border-color: @greyLight;
+    margin: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0;
+
+    display: block;
+    float: left;
+    width: 33.33%;
+
+    &:first-child {
+      border-left: 0;
+    }
   }
 }
 

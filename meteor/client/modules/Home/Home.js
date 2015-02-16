@@ -72,11 +72,7 @@ if (Meteor.isClient) {
                 marker = $(".loading-more").offset().top,
                 position = $(document).scrollTop();
 
-            console.log(windowH, documentH, marker, position);
-
-
             // if the marker is less than 1 windowH below the fold: load more
-
             if (position + windowH > documentH - windowH) {
                 console.log("load more");
                 if (tpl.numVenues.get() < tpl.maxVenues.get()) {
