@@ -1,6 +1,8 @@
 
 <template name="VenueMap">
     <div class="venue venue-map">
-        hello venue map
+        <div class="map-container">
+            {{>googleMap name="VenueMap" options=VenueMapOptions}}
+        </div>
     </div>
 </template>

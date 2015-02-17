@@ -1135,7 +1135,7 @@ nav.tabs {
   border-top: 1px solid #aaaaaa;
   border-bottom: 1px solid #aaaaaa;
   clear: both;
-  margin: 1em 0;
+  margin: 0 0 1em;
   overflow: hidden;
   text-align: center;
 }
