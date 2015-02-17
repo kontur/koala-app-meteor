@@ -14,6 +14,8 @@ if (Meteor.isClient) {
         var tpl = Template.instance();
         var id = this.data.id;
 
+        console.log(tpl);
+
         Meteor.call("venue_images", id, function (err, res) {
             if (err) {
                 Session.set("errors", _.union(Session.get("errors"), [err]));

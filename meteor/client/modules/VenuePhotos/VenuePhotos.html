@@ -4,8 +4,8 @@
     <div class="venue venue-photos">
         <nav class="tabs">
             <button><i class="glyphicon glyphicon-phone"></i></button>
-            <a class="button" href="/venue/{{id}}"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
-            <a class="button" href="/venue/{{id}}/map"><i class="glyphicon glyphicon-map-marker"></i></a>
+            <a class="button {{isActiveRoute regex='info$'}}" href="/venue/{{id}}/info"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
+            <a class="button {{isActiveRoute regex='map$'}}" href="/venue/{{id}}/map"><i class="glyphicon glyphicon-map-marker"></i></a>
         </nav>
     </div>
 

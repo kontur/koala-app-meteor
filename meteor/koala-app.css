@@ -1158,6 +1158,10 @@ nav.tabs a:first-child,
 nav.tabs button:first-child {
   border-left: 0;
 }
+nav.tabs a.active,
+nav.tabs button.active {
+  color: #d0021b;
+}
 .loading-ajax {
   margin: 2em auto;
   text-align: center;

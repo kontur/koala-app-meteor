@@ -51,6 +51,10 @@ Router.route("/explore/:category", function () {
 });
 
 Router.route("/venue/:id", function () {
+    this.redirect("/venue/" + this.params.id + "/info");
+});
+
+Router.route("/venue/:id/info", function () {
     console.log("venue", this.params.id);
     var id = this.params.id;
     this.render("VenueInfo", {
@@ -62,7 +66,8 @@ Router.route("/venue/:id", function () {
     this.render("VenuePhotos", {
         to: "bottom",
         data: {
-            id: id
+            id: id,
+            active: "info"
         }
     });
 });
@@ -76,7 +81,8 @@ Router.route("/venue/:id/map", function () {
     this.render("VenuePhotos", {
         to: "bottom",
         data: {
-            id: id
+            id: id,
+            active: "map"
         }
     });
 });
