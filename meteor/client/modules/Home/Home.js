@@ -66,7 +66,6 @@ if (Meteor.isClient) {
         }
 
         function onScroll(event) {
-            console.log("scrolling");
             var windowH = $(window).height(),
                 documentH = $(document).height(),
                 marker = $(".loading-more").offset().top,
@@ -74,15 +73,11 @@ if (Meteor.isClient) {
 
             // if the marker is less than 1 windowH below the fold: load more
             if (position + windowH > documentH - windowH) {
-                console.log("load more");
                 if (tpl.numVenues.get() < tpl.maxVenues.get()) {
-                    console.log("already loading more");
                 } else {
-                    console.log("LOAD MORE");
                     tpl.maxVenues.set(tpl.maxVenues.get() + 3);
                 }
             } else {
-                console.log("leave it be");
             }
 
         }

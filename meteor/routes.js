@@ -52,10 +52,31 @@ Router.route("/explore/:category", function () {
 
 Router.route("/venue/:id", function () {
     console.log("venue", this.params.id);
-    this.render("Venue", {
-        to: "main",
+    var id = this.params.id;
+    this.render("VenueInfo", {
+        to: "top",
         data: {
-            id: this.params.id
+            id: id
+        }
+    });
+    this.render("VenuePhotos", {
+        to: "bottom",
+        data: {
+            id: id
+        }
+    });
+});
+
+Router.route("/venue/:id/map", function () {
+    console.log("venue map", this.params.id);
+    var id = this.params.id;
+    this.render("VenueMap", {
+        to: "top"
+    });
+    this.render("VenuePhotos", {
+        to: "bottom",
+        data: {
+            id: id
         }
     });
 });

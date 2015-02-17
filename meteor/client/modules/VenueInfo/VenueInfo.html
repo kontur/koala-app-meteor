@@ -1,0 +1,47 @@
+
+<template name="VenueInfo">
+    <div class="venue venue-info">
+        {{#with venue}}
+        <header>
+            <h1>
+                <a href="/venue/{{venue.id}}">
+                    <img class="venue-icon" src="{{ venue_icon }}">
+                    {{venue.name}}
+                </a>
+            </h1>
+
+            <div class="meta">
+                <span><i class="glyphicon glyphicon-star"></i> {{venue.rating}}</span>|
+                <span><a href=""><i class="glyphicon glyphicon-map-marker"></i> {{venue.location.distance}} m</a></span>|
+                <span><i class="glyphicon glyphicon-time"></i> 3m</span>
+            </div>
+        </header>
+
+        {{#if description}}
+        <p class="venue-description">{{description}}</p>
+        {{else}}
+        <p class="venue-description">{{categories.[0].name}}</p>
+        {{/if}}
+
+
+        <div class="venue-info">
+            <div>
+                <span><i class="glyphicon glyphicon-globe"></i> <span><a href="{{url}}">{{url}}</a></span></span>
+                <span><i class="glyphicon glyphicon-info-sign"></i>
+                    {{#each location.formattedAddress}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </span>
+            </div>
+            <div>
+                <span><i class="glyphicon glyphicon-phone"></i> <span><a href="tel:{{contact.phone}}">{{contact.formattedPhone}}</a></span></span>
+                {{#if hours.status}}
+                <span><i class="glyphicon glyphicon-time"></i> <span>{{hours.status}}</span></span>
+                {{/if}}
+            </div>
+        </div>
+        {{else}}
+        {{>LoadingAjax}}
+        {{/with}}
+    </div>
+</template>

@@ -38,7 +38,9 @@
     {{/unless}}
 
     <main>
+        {{>yield "top"}}
         {{>yield "main"}}
+        {{>yield "bottom"}}
     </main>
 
     {{else}}

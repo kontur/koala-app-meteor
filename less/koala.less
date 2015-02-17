@@ -34,6 +34,8 @@
 html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -74,7 +76,7 @@ a {
   text-decoration: none;
 }
 
-button {
+button, .button {
   border: 1px solid @link;
   border-radius: 0.25em;
   background: white;
@@ -200,17 +202,18 @@ nav.tabs {
   overflow: hidden;
   text-align: center;
 
-  button {
+  a, button {
     .box-sizing(border-box);
+
     border-radius: 0;
-    border-color: @greyLight;
-    margin: 0;
     border-top: 0;
     border-bottom: 0;
     border-right: 0;
+    border-left: 1px solid @greyLight;
 
     display: block;
     float: left;
+    margin: 0;
     width: 33.33%;
 
     &:first-child {
@@ -219,3 +222,8 @@ nav.tabs {
   }
 }
 
+// general purpose ajax loader with spinner
+.loading-ajax {
+  margin: 2em auto;
+  text-align: center;
+}

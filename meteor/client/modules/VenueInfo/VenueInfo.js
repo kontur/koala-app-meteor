@@ -1,16 +1,12 @@
 if (Meteor.isClient) {
 
-    Template.Venue.created = function () {
+    Template.VenueInfo.created = function () {
         this.venue = new ReactiveVar();
-        this.images = new ReactiveVar();
     };
 
-    Template.Venue.helpers({
+    Template.VenueInfo.helpers({
         "venue": function () {
             return Template.instance().venue.get();
-        },
-        "images": function () {
-            return Template.instance().images.get();
         },
         "venue_icon": function () {
             try {
@@ -23,7 +19,7 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.Venue.rendered = function () {
+    Template.VenueInfo.rendered = function () {
         var tpl = Template.instance();
         var id = this.data.id;
         Meteor.call("venue", id, function (err, res) {
@@ -34,16 +30,6 @@ if (Meteor.isClient) {
             var contents = JSON.parse(res.content);
             console.log(contents);
             tpl.venue.set(contents.venue);
-
-            Meteor.call("venue_images", id, function (err, res) {
-                if (err) {
-                    Session.set("errors", _.union(Session.get("errors"), [err]));
-                    return;
-                }
-                var images = JSON.parse(res.content);
-                console.log("images", id, images);
-                tpl.images.set(images);
-            });
         });
     };
 
