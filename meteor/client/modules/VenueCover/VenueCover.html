@@ -1,24 +1,16 @@
 <template name="VenueCover">
     <div class="venue-cover">
         <h1>
-            <a href="/venue/{{venue.id}}">
+            <a href="/venue/{{venue.id}}/info">
                 <img class="venue-icon" src="{{ venue_icon }}">
                 {{venue.name}}
             </a>
         </h1>
-        <!--<span>
-            {{#with venue.categories}}
-                {{#each this}}
-                    {{name}}
-                {{/each}}
-            {{/with}}
-        </span>-->
         <div class="meta">
             <span><i class="glyphicon glyphicon-star"></i> {{venue.rating}}</span>|
             <span><a href=""><i class="glyphicon glyphicon-map-marker"></i> {{venue.location.distance}} m</a></span>|
             <span><i class="glyphicon glyphicon-time"></i> 3m</span>
         </div>
-        <!--<span>{{venue.location.city}}, {{venue.location.country}}</span>-->
         {{#with instagram.[0]}}
         {{>Image}}
         {{/with}}

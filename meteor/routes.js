@@ -30,20 +30,20 @@ Router.onBeforeAction(function() {
 
 Router.route("/", function () {
     this.render("Home", {
-        to: "main"
+        to: "top"
     });
 }, { name: "home" });
 
 
 Router.route("/explore", function () {
     this.render("Explore", {
-        to: "main"
+        to: "top"
     });
 });
 
 Router.route("/explore/:category", function () {
     this.render("ExploreCategory", {
-        to: "main",
+        to: "top",
         data: {
             "category": this.params.category
         }
@@ -59,15 +59,16 @@ Router.route("/map", {
     },
     action: function () {
         this.render("Map", {
-            to: "main"
+            to: "top"
         });
     }
 }, { name: "map" });
 
 
-Router.route("/venue/:id", function () {
-    this.redirect("/venue/" + this.params.id + "/info");
-}, { name: "venue" });
+// this works, but causes an extraneous browser history entry :/
+//Router.route("/venue/:id", function () {
+//    this.redirect("/venue/" + this.params.id + "/info");
+//}, { name: "venue" });
 
 Router.route("/venue/:id/info", function () {
     console.log("venue", this.params.id);
@@ -107,6 +108,6 @@ Router.route("/venue/:id/map", function () {
 
 Router.route("/search", function () {
     this.render("Search", {
-        to: "main"
+        to: "top"
     });
 }, { name: "venue.search" });
