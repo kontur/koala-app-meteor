@@ -2,7 +2,7 @@
 nav.fly-out {
   background: white;
   position: fixed;
-  top: 2.5em;
+  top: 2em;
   height: 100%;
   width: 100%;
   z-index: 200;
@@ -18,9 +18,9 @@ nav.fly-out {
 
   a {
     color: @red;
+    .heading();
     display: block;
     padding: 0.5em 1em 0.25em;
-    font-size: larger;
     border-bottom: 1px solid @greyLight;
     text-transform: uppercase;
 
@@ -31,13 +31,73 @@ nav.fly-out {
   }
 }
 
-nav#nav {
+nav#menu {
   left: 0;
   transform: translateX(-100%);
 
 }
 
-nav#user-nav {
-  left: 0;
-  transform: (translateX(100%));
+nav.drop-down {
+  position: fixed;
+  top: 2em;
+  overflow: visible;
+  width: 100%;
+  .box-sizing(border-box);
+  .transition(height 0.25s ease-in-out);
+
+  &.open {
+    height: auto;
+    ul {
+      display: block;
+    }
+
+    .icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .drop-down-current {
+    display: block;
+    position: absolute;
+    left: 3em;
+    right: 3em;
+    top: -2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+  }
+
+  .icon {
+    display: inline-block;
+    margin: 0 0 0 0.5em;
+    position: relative;
+    transform: rotate(0deg);
+    .transform-origin(center center);
+    .transition(all 0.25s ease-in-out 0.2s);
+    i {
+      font-size: 0.75em;
+      position: relative;
+      top: 0;
+    }
+  }
+
+  ul {
+    background: white;
+    display: none;
+    padding: 0 2em 1em;
+    height: 100%;
+    text-align: center;
+
+    li {
+      display: block;
+    }
+    a {
+      display: block;
+      padding: 0.5em 1em 0.25em;
+
+      &.active {
+        color: @red;
+      }
+    }
+  }
 }

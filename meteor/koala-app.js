@@ -21,20 +21,6 @@ if (Meteor.isClient) {
 
 
     Template.Shell.events({
-        "click #header .menu-toggle": function (e) {
-            $("#nav").toggleClass("open");
-            $("#user-nav").removeClass("open");
-        },
-        "click #header .user-toggle": function (e) {
-            $("#user-nav").toggleClass("open");
-            $("#nav").removeClass("open");
-        },
-        "click #nav a": function (e) {
-            $("#nav").removeClass("open");
-        },
-        "click #user-nav button": function (e) {
-        },
-
         "click .user-logout": function (e) {
             Meteor.logout();
         },

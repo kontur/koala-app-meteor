@@ -1,28 +1,41 @@
 header#header {
-  height: 1.5em;
+  background: white;
+  border-bottom: 1px solid @greyLight;
+  height: 2em;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
+  .box-sizing(border-box);
 
-  #header-bar {
-    background: #ccc;
-    height: 100%;
-    padding: 0.5em;
+  button {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: none;
+    outline: 0;
+  }
 
-    button {
-      background: none;
-      border: 0;
-      color: @red;
-      font: inherit;
-      padding: 0.25em 0.5em;
-      outline: none;
-    }
+  > button {
+    position: absolute;
+    top: 0;
+    border-radius: 0;
+    width: 3em;
+    height: 2em;
+  }
 
-    .menu-toggle {
-    }
-    .user-toggle {
-      float: right;
-    }
+  .menu-toggle {
+    left: 0;
+  }
+  .menu-search {
+    right: 0;
+  }
+
+  #menu {
+
+  }
+
+  #menu-discover {
+
   }
 }

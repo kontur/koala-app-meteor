@@ -17,11 +17,17 @@ Router.onBeforeAction(function (req, res, next) {
         Session.set("geolocation", position);
     });
     this.next();
+
+    console.log("onBefore");
 });
 
-Router.onBeforeAction(function() {
-  GoogleMaps.load();
-  this.next();
+Router.onAfterAction(function () {
+    console.log("onAfter");
+});
+
+Router.onBeforeAction(function () {
+    GoogleMaps.load();
+    this.next();
 }, { only: ['map', 'venue.map'] });
 
 
@@ -29,26 +35,28 @@ Router.onBeforeAction(function() {
 // ======
 
 Router.route("/", function () {
+    this.render("HeaderDiscover", { to: "header" });
     this.render("Home", {
         to: "top"
     });
+    this.render("Empty", { to: "bottom" });
 }, { name: "home" });
 
+// just a URL redirect in case someone "guesses" to go to the /discover URL
+Router.route("/discover", function () {
+    this.redirect("/");
+}, { name: "discover_null" });
 
-Router.route("/explore", function () {
-    this.render("Explore", {
-        to: "top"
-    });
-});
-
-Router.route("/explore/:category", function () {
-    this.render("ExploreCategory", {
+Router.route("/discover/:category", function () {
+    this.render("HeaderDiscover", { to: "header" });
+    this.render("Home", {
         to: "top",
         data: {
             "category": this.params.category
         }
     });
-});
+    this.render("Empty", { to: "bottom" });
+}, { name: "discover" });
 
 
 Router.route("/map", {
@@ -58,9 +66,11 @@ Router.route("/map", {
         this.next();
     },
     action: function () {
+        this.render("Header", { to: "header" });
         this.render("Map", {
             to: "top"
         });
+        this.render("Empty", { to: "bottom" });
     }
 }, { name: "map" });
 
@@ -73,6 +83,7 @@ Router.route("/map", {
 Router.route("/venue/:id/info", function () {
     console.log("venue", this.params.id);
     var id = this.params.id;
+    this.render("HeaderStub", { to: "header" });
     this.render("VenueInfo", {
         to: "top",
         data: {
@@ -91,6 +102,7 @@ Router.route("/venue/:id/info", function () {
 Router.route("/venue/:id/map", function () {
     console.log("venue map", this.params.id);
     var id = this.params.id;
+    this.render("Header", { to: "header" });
     this.render("VenueMap", {
         to: "top",
         data: {
@@ -107,7 +119,9 @@ Router.route("/venue/:id/map", function () {
 }, { name: "venue.map" });
 
 Router.route("/search", function () {
+    this.render("Header", { to: "header" });
     this.render("Search", {
         to: "top"
     });
+    this.render("Empty", { to: "bottom" });
 }, { name: "venue.search" });

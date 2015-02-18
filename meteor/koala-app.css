@@ -790,32 +790,41 @@
   content: "\e260";
 }
 header#header {
-  height: 1.5em;
+  background: white;
+  border-bottom: 1px solid #aaaaaa;
+  height: 2em;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-header#header #header-bar {
-  background: #ccc;
-  height: 100%;
-  padding: 0.5em;
-}
-header#header #header-bar button {
-  background: none;
+header#header button {
   border: 0;
-  color: #d0021b;
-  font: inherit;
-  padding: 0.25em 0.5em;
-  outline: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  outline: 0;
 }
-header#header #header-bar .user-toggle {
-  float: right;
+header#header > button {
+  position: absolute;
+  top: 0;
+  border-radius: 0;
+  width: 3em;
+  height: 2em;
+}
+header#header .menu-toggle {
+  left: 0;
+}
+header#header .menu-search {
+  right: 0;
 }
 nav.fly-out {
   background: white;
   position: fixed;
-  top: 2.5em;
+  top: 2em;
   height: 100%;
   width: 100%;
   z-index: 200;
@@ -831,9 +840,9 @@ nav.fly-out li {
 }
 nav.fly-out a {
   color: #d0021b;
+  font-family: 'Slabo 27px', serif;
   display: block;
   padding: 0.5em 1em 0.25em;
-  font-size: larger;
   border-bottom: 1px solid #aaaaaa;
   text-transform: uppercase;
 }
@@ -842,13 +851,75 @@ nav.fly-out a:focus {
   border-bottom: 1px solid #d0021b;
   background: #aaaaaa;
 }
-nav#nav {
+nav#menu {
   left: 0;
   transform: translateX(-100%);
 }
-nav#user-nav {
-  left: 0;
-  transform: translateX(100%);
+nav.drop-down {
+  position: fixed;
+  top: 2em;
+  overflow: visible;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: height 0.25s ease-in-out;
+  -o-transition: height 0.25s ease-in-out;
+  transition: height 0.25s ease-in-out;
+}
+nav.drop-down.open {
+  height: auto;
+}
+nav.drop-down.open ul {
+  display: block;
+}
+nav.drop-down.open .icon {
+  transform: rotate(180deg);
+}
+nav.drop-down .drop-down-current {
+  display: block;
+  position: absolute;
+  left: 3em;
+  right: 3em;
+  top: -2em;
+  height: 2em;
+  line-height: 2em;
+  text-align: center;
+}
+nav.drop-down .icon {
+  display: inline-block;
+  margin: 0 0 0 0.5em;
+  position: relative;
+  transform: rotate(0deg);
+  -webkit-transform-origin: center center;
+  -moz-transform-origin: center center;
+  -ms-transform-origin: center center;
+  transform-origin: center center;
+  -webkit-transition: all 0.25s ease-in-out 0.2s;
+  -o-transition: all 0.25s ease-in-out 0.2s;
+  transition: all 0.25s ease-in-out 0.2s;
+}
+nav.drop-down .icon i {
+  font-size: 0.75em;
+  position: relative;
+  top: 0;
+}
+nav.drop-down ul {
+  background: white;
+  display: none;
+  padding: 0 2em 1em;
+  height: 100%;
+  text-align: center;
+}
+nav.drop-down ul li {
+  display: block;
+}
+nav.drop-down ul a {
+  display: block;
+  padding: 0.5em 1em 0.25em;
+}
+nav.drop-down ul a.active {
+  color: #d0021b;
 }
 .venue-cover {
   clear: both;
@@ -891,7 +962,7 @@ nav#user-nav {
 }
 .venue-info > header {
   text-align: center;
-  margin: 5em 0 0.5em;
+  margin: 2em 0 0.5em;
 }
 .venue-info > header .meta {
   font-size: smaller;
@@ -1057,6 +1128,15 @@ h4 > a,
 h5 > a,
 h6 > a {
   color: inherit;
+}
+main {
+  position: absolute;
+  top: 2em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1em 0;
+  overflow-y: scroll;
 }
 main > h1 {
   border-left: 0.5em solid #d0021b;
