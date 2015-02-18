@@ -872,6 +872,34 @@ nav#user-nav {
 .venue-cover .meta span {
   margin: 0 0.5em;
 }
+.venue-map .map-container {
+  height: 300px;
+}
+.venue-map header {
+  margin: 0.5em;
+}
+.venue-map header h1 {
+  float: left;
+}
+.venue-map header .meta {
+  float: right;
+  font-size: smaller;
+  margin: 0.5em 0 0;
+}
+.venue-map header .meta span {
+  margin: 0 0.5em;
+}
+.venue-info > header {
+  text-align: center;
+  margin: 5em 0 0.5em;
+}
+.venue-info > header .meta {
+  font-size: smaller;
+  margin: 2em 0 0;
+}
+.venue-info > header .meta span {
+  margin: 0 0.5em;
+}
 .image {
   clear: both;
   position: relative;
@@ -957,27 +985,16 @@ nav#user-nav {
   top: 0.35em;
   font-size: smaller;
 }
-.venue > header {
-  text-align: center;
-  margin: 5em 0 0.5em;
-}
-.venue > header .meta {
-  font-size: smaller;
-  margin: 2em 0 0;
-}
-.venue > header .meta span {
-  margin: 0 0.5em;
-}
 .venue .venue-description {
   padding: 0 2em;
   text-align: center;
   margin: 0 0 2em;
 }
-.venue .venue-info {
+.venue .venue-details {
   overflow: hidden;
   margin: 0 0 2em;
 }
-.venue .venue-info > div {
+.venue .venue-details > div {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -987,18 +1004,18 @@ nav#user-nav {
   padding: 0 1em;
   width: 50%;
 }
-.venue .venue-info > div > span {
+.venue .venue-details > div > span {
   display: block;
   position: relative;
   padding-left: 2em;
   margin: 0 0 0.5em;
 }
-.venue .venue-info > div > span > .glyphicon {
+.venue .venue-details > div > span > .glyphicon {
   position: absolute;
   left: 0;
   top: 0;
 }
-.venue .venue-info > div > span > span {
+.venue .venue-details > div > span > span {
   display: block;
 }
 .venue-images h1 {

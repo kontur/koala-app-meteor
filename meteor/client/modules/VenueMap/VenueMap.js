@@ -1,6 +1,13 @@
 if (Meteor.isClient) {
 
+    Template.VenueMap.created = function () {
+        this.venue = new ReactiveVar();
+    };
+
     Template.VenueMap.helpers({
+        "venue": function () {
+            return Template.instance().venue.get();
+        },
         "VenueMapOptions": function () {
             var tpl = Template.instance();
             // Make sure the maps API has loaded
@@ -29,6 +36,8 @@ if (Meteor.isClient) {
                     return;
                 }
                 var contents = JSON.parse(res.content);
+                tpl.venue.set(contents.venue);
+                console.log("venue", tpl.venue.get());
 
                 // Add a marker to the map once it"s ready
                 var venuePos = new google.maps.LatLng(contents.venue.location.lat, contents.venue.location.lng);
@@ -38,7 +47,7 @@ if (Meteor.isClient) {
                     map: GoogleMaps.maps.VenueMap.instance,
                     icon: Meteor.settings.public["icons"] + "208,2,27/" +
                         encodeURIComponent(contents.venue.categories[0].icon.prefix + "32" +
-                        contents.venue.categories[0].icon.suffix)
+                            contents.venue.categories[0].icon.suffix)
                 });
 
                 panTo = venuePos;
