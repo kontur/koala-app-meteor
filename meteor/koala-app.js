@@ -53,20 +53,15 @@ if (Meteor.isServer) {
 
     Meteor.methods({
         "venues": function (lat, lng, opt) {
-            var category = null;
             var options = {};
             var defaults = {
                 limit: 3
             };
 
-            if (opt && opt.category) {
-                category = opt.category;
-                delete opt.category;
-            }
             options = _.extend(defaults, opt);
 
             return Meteor.http.call("GET", getApiRoute("venues/show/" + lat + "/" + lng +
-                (category ? "/" + category : "") + "?" + serializeQueryString(options)));
+                "?" + serializeQueryString(options)));
         },
 
         "venue": function (id) {

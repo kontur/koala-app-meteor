@@ -12,7 +12,6 @@ if (Meteor.isClient) {
         }
     });
 
-
     Template.Home.events({
         "click .load-more": function (event, tpl) {
             // increase the number of max venues, this will trigger autorun to check
@@ -24,6 +23,8 @@ if (Meteor.isClient) {
     Template.Home.rendered = function () {
         var tpl = Template.instance();
 
+        console.log(tpl.data);
+
         // where the magic happens!
         // if either numVenues of maxVenues change, this triggers loading of new venues if so needed
         // note: this also autoruns on first init, because the variables "change"
@@ -31,6 +32,14 @@ if (Meteor.isClient) {
             if (tpl.numVenues.get() < tpl.maxVenues.get()) {
                 getVenue(tpl.numVenues.get());
             }
+        });
+
+        Tracker.autorun(function () {
+            console.log("HELLO AUTORUN CATEGORY CHANGED");
+            var c = Session.get("category");
+            this.discover = new ReactiveVar([]);
+            this.numVenues = new ReactiveVar(0);
+            this.maxVenues = new ReactiveVar(3);
         });
 
         $(window).scroll(onScroll);
@@ -41,27 +50,36 @@ if (Meteor.isClient) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 Session.set("geolocation", position);
 
-                Meteor.call("venues", position.coords.latitude, position.coords.longitude,
-                    {
+//                console.log("cate", tpl.data, tpl.data["category"]);
+
+                var qry = {
                         limit: 1,
                         offset: offset,
                         images: 1,
                         comments: 0 // no comments requested in initial call, only after load to minimize load time
-                    },
+                    };
+
+                if (tpl.data && tpl.data["category"]) {
+                    qry["category"] = tpl.data["category"];
+                }
+
+                console.log("QUERY", qry);
+
+                Meteor.call("venues", position.coords.latitude, position.coords.longitude, qry,
                     function (err, res) {
-                    if (err) {
-                        Session.set("errors", _.union(Session.get("errors"), [err]));
-                        return;
-                    }
+                        if (err) {
+                            Session.set("errors", _.union(Session.get("errors"), [err]));
+                            return;
+                        }
 
-                    console.log("res", JSON.parse(res.content)[0]);
+                        console.log("res", JSON.parse(res.content)[0]);
 
-                    // push new venues to view helper and increase count
-                    var current = tpl.discover.get();
-                    current.push(JSON.parse(res.content)[0]);
-                    tpl.discover.set(current);
-                    tpl.numVenues.set(tpl.numVenues.get() + 1);
-                });
+                        // push new venues to view helper and increase count
+                        var current = tpl.discover.get();
+                        current.push(JSON.parse(res.content)[0]);
+                        tpl.discover.set(current);
+                        tpl.numVenues.set(tpl.numVenues.get() + 1);
+                    });
             });
         }
 

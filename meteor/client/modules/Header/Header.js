@@ -18,6 +18,7 @@ if (Meteor.isClient) {
         "click #menu-discover a": function (e) {
             $("#menu-discover").removeClass("open");
             $("#menu-discover .label").html($(e.target).html());
+            Session.set("category", $("#menu-discover .label").html($(e.target).html()));
         }
     });
 

@@ -17,13 +17,17 @@ Router.onBeforeAction(function (req, res, next) {
         Session.set("geolocation", position);
     });
     this.next();
-
-    console.log("onBefore");
 });
 
-Router.onAfterAction(function () {
-    console.log("onAfter");
-});
+//Router.onAfterAction(function (req, res, next) {
+//    console.log("onAfter");
+////    console.log(req, res, next);
+//});
+//
+//Router.onRerun(function (req, res, next) {
+//    console.log("onRerun");
+//    console.log(req, res, next);
+//});
 
 Router.onBeforeAction(function () {
     GoogleMaps.load();
@@ -34,29 +38,46 @@ Router.onBeforeAction(function () {
 // ROUTES
 // ======
 
-Router.route("/", function () {
-    this.render("HeaderDiscover", { to: "header" });
-    this.render("Home", {
-        to: "top"
-    });
-    this.render("Empty", { to: "bottom" });
-}, { name: "home" });
+
+HomeController = RouteController.extend({
+    action: function () {
+        console.log("hello route / action", this);
+        this.render("HeaderDiscover", { to: "header" });
+        this.render("Home", {
+            to: "top"
+        });
+        this.render("Empty", { to: "bottom" });
+    }
+});
+
+Router.route("/", {
+    name: "home",
+    controller: "HomeController"
+});
+
 
 // just a URL redirect in case someone "guesses" to go to the /discover URL
 Router.route("/discover", function () {
     this.redirect("/");
 }, { name: "discover_null" });
 
-Router.route("/discover/:category", function () {
-    this.render("HeaderDiscover", { to: "header" });
-    this.render("Home", {
-        to: "top",
-        data: {
-            "category": this.params.category
+Router.route("/discover/:category",
+    {
+        name: "discover",
+        action: function () {
+            console.log("hello route discover/category", this);
+            var s = Session.get("category");
+            console.log("SESSION", s);
+            this.render("HeaderDiscover", { to: "header" });
+            this.render("Home", {
+                to: "top",
+                data: {
+                    "category": this.params.category
+                }
+            });
+            this.render("Empty", { to: "bottom" });
         }
     });
-    this.render("Empty", { to: "bottom" });
-}, { name: "discover" });
 
 
 Router.route("/map", {
@@ -76,9 +97,9 @@ Router.route("/map", {
 
 
 // this works, but causes an extraneous browser history entry :/
-//Router.route("/venue/:id", function () {
-//    this.redirect("/venue/" + this.params.id + "/info");
-//}, { name: "venue" });
+Router.route("/venue/:id", function () {
+    this.redirect("/venue/" + this.params.id + "/info");
+}, { name: "venue" });
 
 Router.route("/venue/:id/info", function () {
     console.log("venue", this.params.id);
