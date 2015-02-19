@@ -16,3 +16,4 @@ accounts-password
 dburles:google-maps
 zimme:iron-router-active
 aldeed:template-extension
+mrt:external-file-loader

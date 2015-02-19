@@ -1,5 +1,22 @@
 if (Meteor.isClient) {
 
+    /**
+     * RichMarker Anchor positions
+     * @enum {number}
+     */
+    var RichMarkerPosition = {
+        'TOP_LEFT': 1,
+        'TOP': 2,
+        'TOP_RIGHT': 3,
+        'LEFT': 4,
+        'MIDDLE': 5,
+        'RIGHT': 6,
+        'BOTTOM_LEFT': 7,
+        'BOTTOM': 8,
+        'BOTTOM_RIGHT': 9
+    };
+    window['RichMarkerPosition'] = RichMarkerPosition;
+
 
     Template.Map.created = function () {
         this.venues = new ReactiveVar();
@@ -11,6 +28,8 @@ if (Meteor.isClient) {
     var updateMapLastCall = Date.now();
 
     Template.Map.rendered = function () {
+
+
         var tpl = Template.instance();
         navigator.geolocation.getCurrentPosition(function (position) {
             Session.set("geolocation", position);
@@ -21,9 +40,23 @@ if (Meteor.isClient) {
                 GoogleMaps.ready("exampleMap", function () {
                     // Add a marker to the map once it"s ready
                     var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    var here = new google.maps.Marker({
-                        position: pos,
-                        map: GoogleMaps.maps.exampleMap.instance
+//                    var here = new google.maps.Marker({
+//                        position: pos,
+//                        map: GoogleMaps.maps.exampleMap.instance
+//                    });
+
+                    console.log("hello", google.maps.OverlayView, RichMarker);
+
+                    Meteor.Loader.loadJs("//google-maps-utility-library-v3.googlecode.com/svn/trunk/richmarker/src/richmarker.js", function () {
+                        console.log("google maps utils loaded");
+                        marker = new RichMarker({
+                            position: pos,
+                            map: GoogleMaps.maps.exampleMap.instance,
+                            draggable: true,
+                            content: '<div class="my-marker"><div>This is a nice image</div>' +
+                                '<div><img src="http://farm4.static.flickr.com/3212/3012579547_' +
+                                '097e27ced9_m.jpg"/></div><div>You should drag it!</div></div>'
+                        });
                     });
 
                     google.maps.event.addListener(GoogleMaps.maps.exampleMap.instance, "center_changed", function () {
