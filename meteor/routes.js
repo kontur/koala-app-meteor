@@ -38,15 +38,19 @@ Router.onBeforeAction(function () {
 // ROUTES
 // ======
 
-
 HomeController = RouteController.extend({
     action: function () {
-        console.log("hello route / action", this);
+        console.log("hello HomeController", this);
         this.render("HeaderDiscover", { to: "header" });
+
         this.render("Home", {
-            to: "top"
+            to: "top",
+            data: {
+                "category": this.params.category
+            }
         });
         this.render("Empty", { to: "bottom" });
+        Session.set("category", this.params.category ? this.params.category : null);
     }
 });
 
@@ -61,23 +65,10 @@ Router.route("/discover", function () {
     this.redirect("/");
 }, { name: "discover_null" });
 
-Router.route("/discover/:category",
-    {
-        name: "discover",
-        action: function () {
-            console.log("hello route discover/category", this);
-            var s = Session.get("category");
-            console.log("SESSION", s);
-            this.render("HeaderDiscover", { to: "header" });
-            this.render("Home", {
-                to: "top",
-                data: {
-                    "category": this.params.category
-                }
-            });
-            this.render("Empty", { to: "bottom" });
-        }
-    });
+Router.route("/discover/:category", {
+    name: "discover",
+    controller: "HomeController"
+});
 
 
 Router.route("/map", {
@@ -92,8 +83,9 @@ Router.route("/map", {
             to: "top"
         });
         this.render("Empty", { to: "bottom" });
-    }
-}, { name: "map" });
+    },
+    name: "map"
+});
 
 
 // this works, but causes an extraneous browser history entry :/

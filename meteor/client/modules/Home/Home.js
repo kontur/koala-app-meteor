@@ -22,27 +22,37 @@ if (Meteor.isClient) {
 
     Template.Home.rendered = function () {
         var tpl = Template.instance();
+        var category = null;
 
-        console.log(tpl.data);
+//        console.log("TPL data", tpl.data);
 
         // where the magic happens!
         // if either numVenues of maxVenues change, this triggers loading of new venues if so needed
         // note: this also autoruns on first init, because the variables "change"
+        Tracker.autorun(checkNew);
+
         Tracker.autorun(function () {
-            if (tpl.numVenues.get() < tpl.maxVenues.get()) {
-                getVenue(tpl.numVenues.get());
+            var c = Session.get("category");
+//            console.log("autorun, session", c, category);
+            if (c !== category) {
+                category = c;
+                if (tpl.numVenues.get() > 0) {
+//                    console.log("reset");
+                    if (tpl.discover) tpl.discover.set([]);
+                    if (tpl.numVenues) tpl.numVenues.set(0);
+                    if (tpl.maxVenues) tpl.maxVenues.set(3);
+//                    checkNew();
+                }
             }
         });
 
-        Tracker.autorun(function () {
-            console.log("HELLO AUTORUN CATEGORY CHANGED");
-            var c = Session.get("category");
-            this.discover = new ReactiveVar([]);
-            this.numVenues = new ReactiveVar(0);
-            this.maxVenues = new ReactiveVar(3);
-        });
-
         $(window).scroll(onScroll);
+
+        function checkNew() {
+            if (tpl.numVenues.get() < tpl.maxVenues.get()) {
+                getVenue(tpl.numVenues.get());
+            }
+        }
 
         function getVenue(offset) {
             console.log("getVenue", offset);
@@ -51,16 +61,20 @@ if (Meteor.isClient) {
                 Session.set("geolocation", position);
 
 //                console.log("cate", tpl.data, tpl.data["category"]);
-
                 var qry = {
-                        limit: 1,
-                        offset: offset,
-                        images: 1,
-                        comments: 0 // no comments requested in initial call, only after load to minimize load time
-                    };
+                    limit: 1,
+                    offset: offset,
+                    images: 1,
+                    comments: 0 // no comments requested in initial call, only after load to minimize load time
+                };
 
-                if (tpl.data && tpl.data["category"]) {
-                    qry["category"] = tpl.data["category"];
+//                if (tpl.data && tpl.data["category"]) {
+//                    qry["category"] = tpl.data["category"];
+//                }
+
+                var c = Session.get("category");
+                if (c) {
+                    qry["category"] = c;
                 }
 
                 console.log("QUERY", qry);
@@ -74,6 +88,14 @@ if (Meteor.isClient) {
 
                         console.log("res", JSON.parse(res.content)[0]);
 
+                        // check if upen getting the result the category is still the same as
+                        // when the request was initiated, or has it changed inbetween and this
+                        // result is void
+                        if (c != Session.get("category")) {
+                            console.log("CATEGORY CHANGED");
+                            return;
+                        }
+
                         // push new venues to view helper and increase count
                         var current = tpl.discover.get();
                         current.push(JSON.parse(res.content)[0]);
@@ -81,6 +103,7 @@ if (Meteor.isClient) {
                         tpl.numVenues.set(tpl.numVenues.get() + 1);
                     });
             });
+
         }
 
         function onScroll(event) {
