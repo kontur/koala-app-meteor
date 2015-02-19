@@ -928,17 +928,22 @@ nav.drop-down ul a.active {
   width: 100%;
   color: #aaaaaa;
   font-size: 0.8em;
+  position: relative;
 }
 .venue-cover img {
   width: 100%;
 }
 .venue-cover h1 {
   float: left;
+  padding-right: 10em;
+  display: block;
 }
 .venue-cover .meta {
   float: right;
   font-size: smaller;
-  margin: 0.5em 0 0;
+  position: absolute;
+  right: 0;
+  top: 0.35em;
 }
 .venue-cover .meta span {
   margin: 0 0.5em;
