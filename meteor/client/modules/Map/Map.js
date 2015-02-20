@@ -84,10 +84,10 @@ if (Meteor.isClient) {
         }
     }
 
-    function addMarker(options) {
+    function addMarker(options, tpl) {
         console.log("addMarker", options);
         if (markerLibLoaded) {
-            console.log("addMarker do it");
+            console.log("addMarker do it", this);
             marker = new RichMarker({
                 position: options.position,
                 map: GoogleMaps.maps.VenueMap.instance,
@@ -104,6 +104,24 @@ if (Meteor.isClient) {
             // event listener
 
             // marker photo
+
+            console.log("get images for venue ", options.venue_id);
+            Meteor.call("venue_images", options.venue_id, function (err, res) {
+                console.log("venues call", err, res, JSON.parse(res.content));
+                if (err) {
+                    Session.set("errors", _.union(Session.get("errors"), [err]));
+                    return;
+                }
+                var result = JSON.parse(res.content);
+                console.log("images?", result);
+
+                _.each(tpl.venues.get(), function (venue, index) {
+                    if (venue.venue.id == options.venue_id) {
+                        venue.instagram = result;
+                    }
+                    console.log(venue);
+                });
+            });
 
         } else {
             console.log("addMarker to stack");
@@ -171,21 +189,11 @@ if (Meteor.isClient) {
                 }
 
                 if (!elem.hasMarker) {
-//                    var marker = new google.maps.Marker({
-//                        position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
-//                        map: GoogleMaps.maps.VenueMap.instance,
-//                        icon: Meteor.settings.public["icons"] +
-//                            "90,70,30/" +
-//                            encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix),
-//                        venue_id: elem.venue.id,
-//                        title: elem.venue.name
-//                    });
-
                     addMarker({
                         position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
                         numPhotos: 3,
                         venue_id: elem.venue.id
-                    });
+                    }, tpl);
 
 //                    google.maps.event.addListener(marker, "click", function () {
 //                        var id = this.venue_id;

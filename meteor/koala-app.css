@@ -1109,6 +1109,9 @@ nav.drop-down ul a.active {
 .venue-images h1 {
   padding: 0 0 0 0.75em;
 }
+main > .map-container {
+  margin-top: -1em;
+}
 .map-venue-marker .marker-image {
   background: white;
   border: 1px solid #aaaaaa;
