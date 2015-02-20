@@ -78,7 +78,7 @@ Router.route("/map", {
         this.next();
     },
     action: function () {
-        this.render("Header", { to: "header" });
+        this.render("HeaderStub", { to: "header" });
         this.render("Map", {
             to: "top"
         });

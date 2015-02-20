@@ -1109,6 +1109,25 @@ nav.drop-down ul a.active {
 .venue-images h1 {
   padding: 0 0 0 0.75em;
 }
+.map-venue-marker .marker-image {
+  background: white;
+  border: 1px solid #aaaaaa;
+  border-radius: 4px;
+  padding: 4px;
+}
+.map-venue-marker .marker-image-count {
+  background: white;
+  border: 1px solid #aaaaaa;
+  border-radius: 100%;
+  color: #aaaaaa;
+  height: 1.5em;
+  line-height: 1.7em;
+  position: absolute;
+  right: -0.75em;
+  text-align: center;
+  top: -0.75em;
+  width: 1.5em;
+}
 html,
 body {
   margin: 0;

@@ -1,5 +1,6 @@
 if (Meteor.isClient) {
 
+
     /**
      * RichMarker Anchor positions
      * @enum {number}
@@ -24,11 +25,14 @@ if (Meteor.isClient) {
     };
 
 
+    var markerLibLoaded = false;
+    var markerLibReadyStack = [];
+
+
     // somehow _.debounce just makes a mess here...
     var updateMapLastCall = Date.now();
 
     Template.Map.rendered = function () {
-
 
         var tpl = Template.instance();
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -37,30 +41,24 @@ if (Meteor.isClient) {
 
             // when current user position resolved, add marker wrapped in map ready function
             if (GoogleMaps.loaded()) {
-                GoogleMaps.ready("exampleMap", function () {
+                GoogleMaps.ready("VenueMap", function () {
                     // Add a marker to the map once it"s ready
                     var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-//                    var here = new google.maps.Marker({
-//                        position: pos,
-//                        map: GoogleMaps.maps.exampleMap.instance
-//                    });
-
-                    console.log("hello", google.maps.OverlayView, RichMarker);
-
-                    Meteor.Loader.loadJs("//google-maps-utility-library-v3.googlecode.com/svn/trunk/richmarker/src/richmarker.js", function () {
-                        console.log("google maps utils loaded");
-                        marker = new RichMarker({
-                            position: pos,
-                            map: GoogleMaps.maps.exampleMap.instance,
-                            draggable: true,
-                            content: '<div class="my-marker"><div>This is a nice image</div>' +
-                                '<div><img src="http://farm4.static.flickr.com/3212/3012579547_' +
-                                '097e27ced9_m.jpg"/></div><div>You should drag it!</div></div>'
-                        });
+                    var here = new google.maps.Marker({
+                        position: pos,
+                        map: GoogleMaps.maps.VenueMap.instance
                     });
 
-                    google.maps.event.addListener(GoogleMaps.maps.exampleMap.instance, "center_changed", function () {
+                    // load external library for special formatted markers
+                    // TODO check if this could be done smarter somehow
+                    // TODO serve a copy of this file from server, not SVN trunk :O
+                    Meteor.Loader.loadJs("//google-maps-utility-library-v3.googlecode.com/svn/trunk/richmarker/src/richmarker.js", markerLibReady);
+
+                    google.maps.event.addListener(GoogleMaps.maps.VenueMap.instance, "center_changed", function () {
                         console.log("center_changed");
+
+                        // homebrew debounce; _.debounce somehow seems to get all confused when used with the
+                        // addListener function param :/
                         if (updateMapLastCall + 1000 < Date.now()) {
                             updateMapLastCall = Date.now();
                             updateMap({
@@ -70,11 +68,64 @@ if (Meteor.isClient) {
                                 tpl);
                         }
                     });
-
                 });
             }
         });
     };
+
+
+    function markerLibReady() {
+        console.log("markerLibLReady");
+        markerLibLoaded = true;
+        if (markerLibReadyStack.length > 0) {
+            _.each(markerLibReadyStack, function (item) {
+                addMarker(item);
+            });
+        }
+    }
+
+    function addMarker(options) {
+        console.log("addMarker", options);
+        if (markerLibLoaded) {
+            console.log("addMarker do it");
+            marker = new RichMarker({
+                position: options.position,
+                map: GoogleMaps.maps.VenueMap.instance,
+                draggable: false,
+                flat: true,
+                anchor: RichMarkerPosition.BOTTOM,
+
+                // TODO would be nice to use Blaze here, actually
+                content: '<div class="map-venue-marker" id="venue-marker-' + options.venue_id + '">' +
+                    '<div class="marker-image"><img src="/img/loading.gif"/></div>' +
+                    '<div class="marker-image-count">' + options.numPhotos + '</div></div>'
+            });
+
+            // event listener
+
+            // marker photo
+
+        } else {
+            console.log("addMarker to stack");
+            markerLibReadyStack.push("");
+        }
+
+        /*
+
+        var div = document.createElement('DIV');
+        div.innerHTML = '<div class="my-other-marker">I am flat marker!</div>';
+
+        marker2 = new RichMarker({
+          map: map,
+          position: new google.maps.LatLng(30, 50),
+          draggable: true,
+          flat: true,
+          anchor: RichMarkerPosition.MIDDLE,
+          content: div
+        });
+
+         */
+    }
 
 
     /**
@@ -84,7 +135,7 @@ if (Meteor.isClient) {
     function updateMap(position, tpl) {
         console.log("updateMap", position, tpl);
 
-        GoogleMaps.maps.exampleMap.instance.setCenter(new google.maps.LatLng(position.latitude, position.longitude));
+        GoogleMaps.maps.VenueMap.instance.setCenter(new google.maps.LatLng(position.latitude, position.longitude));
 
         Meteor.call("venues", position.latitude, position.longitude, { limit: 3 }, function (err, res) {
             console.log("venues call", err, res, JSON.parse(res.content));
@@ -120,24 +171,30 @@ if (Meteor.isClient) {
                 }
 
                 if (!elem.hasMarker) {
-                    var marker = new google.maps.Marker({
+//                    var marker = new google.maps.Marker({
+//                        position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
+//                        map: GoogleMaps.maps.VenueMap.instance,
+//                        icon: Meteor.settings.public["icons"] +
+//                            "90,70,30/" +
+//                            encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix),
+//                        venue_id: elem.venue.id,
+//                        title: elem.venue.name
+//                    });
+
+                    addMarker({
                         position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
-                        map: GoogleMaps.maps.exampleMap.instance,
-                        icon: Meteor.settings.public["icons"] +
-                            "90,70,30/" +
-                            encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix),
-                        venue_id: elem.venue.id,
-                        title: elem.venue.name
+                        numPhotos: 3,
+                        venue_id: elem.venue.id
                     });
 
-                    google.maps.event.addListener(marker, "click", function () {
-                        var id = this.venue_id;
-                        colorMarker(this, "230, 50, 30", encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix));
-                        // TODO try catch
-                        tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
-                            return elem.venue.id == id;
-                        }));
-                    });
+//                    google.maps.event.addListener(marker, "click", function () {
+//                        var id = this.venue_id;
+//                        colorMarker(this, "230, 50, 30", encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix));
+//                        // TODO try catch
+//                        tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
+//                            return elem.venue.id == id;
+//                        }));
+//                    });
 
                     elem.hasMarker = true;
                 }
@@ -151,7 +208,7 @@ if (Meteor.isClient) {
     };
 
     Template.Map.helpers({
-        "exampleMapOptions": function () {
+        "VenueMapOptions": function () {
             var tpl = Template.instance();
 
             // Make sure the maps API has loaded
