@@ -33,14 +33,28 @@ if (Meteor.isClient) {
     var updateMapLastCall = Date.now();
 
     Template.Map.rendered = function () {
-
         var tpl = Template.instance();
+
+
+        Tracker.autorun(function () {
+            var selected = tpl.selected.get();
+            console.log("autorun, selected changed", selected);
+
+            if (selected) {
+                selected.id = selected.venue.id;
+            }
+        });
+
+
         navigator.geolocation.getCurrentPosition(function (position) {
             Session.set("geolocation", position);
 
             // when current user position resolved, add marker wrapped in map ready function
             if (GoogleMaps.loaded()) {
-                updateMap(position.coords, tpl);
+                updateMap({
+                    "latitude": position.coords.latitude,
+                    "longitude": position.coords.longitude
+                }, tpl);
 
                 GoogleMaps.ready("VenueMap", function () {
                     // Add a marker to the map once it"s ready
@@ -63,10 +77,9 @@ if (Meteor.isClient) {
                         if (updateMapLastCall + 1000 < Date.now()) {
                             updateMapLastCall = Date.now();
                             updateMap({
-                                    "latitude": this.getCenter().lat(),
-                                    "longitude": this.getCenter().lng()
-                                },
-                                tpl);
+                                "latitude": this.getCenter().lat(),
+                                "longitude": this.getCenter().lng()
+                            }, tpl);
                         }
                     });
                 });
@@ -86,25 +99,35 @@ if (Meteor.isClient) {
     }
 
     function addMarker(data, tpl) {
-        console.log("addMarker", data);
+        console.log("addMarker for ", data.venueId);
         if (markerLibLoaded) {
+
+            // use Blaze to render the marker's html template and make it reactively
+            // load and update the image on creation
             var markerHtml = document.createElement("div");
             Blaze.renderWithData(Template.MapMarker, data, markerHtml);
 
             // user google maps utilities' RichMarker for using html in the map
-            marker = new RichMarker({
+            var marker = new RichMarker({
                 position: data.position,
                 map: GoogleMaps.maps.VenueMap.instance,
                 draggable: false,
                 flat: true,
                 anchor: RichMarkerPosition.BOTTOM,
 
-                // use Blaze to render the marker's html template and make it reactively
-                // load and update the image on creation
+                // pass in Blaze template render node
                 content: markerHtml
             });
 
-            // event listener
+
+            google.maps.event.addListener(marker, "click", function () {
+                var id = data.venueId;
+//                colorMarker(this, "230, 50, 30", encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix));
+                // TODO try catch
+                tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
+                    return elem.venue.id == id;
+                }));
+            });
 
 
         } else {
@@ -120,12 +143,12 @@ if (Meteor.isClient) {
      * @param position Object{latitude, longitude}
      */
     function updateMap(position, tpl) {
-        console.log("updateMap", position, tpl);
+        console.log("updateMap", position);
 
         GoogleMaps.maps.VenueMap.instance.setCenter(new google.maps.LatLng(position.latitude, position.longitude));
 
         Meteor.call("venues", position.latitude, position.longitude, { limit: 3 }, function (err, res) {
-            console.log("venues call", err, res, JSON.parse(res.content));
+//            console.log("venues call", err, res, JSON.parse(res.content));
             if (err) {
                 Session.set("errors", _.union(Session.get("errors"), [err]));
                 return;
@@ -135,22 +158,24 @@ if (Meteor.isClient) {
             var currentVenues = tpl.venues.get();
 
             // if there is already previously found venues on the map
-            if (currentVenues) {
-                _.each(currentVenues, function (currentVenue) {
+            if (responseVenues) {
+                _.each(responseVenues, function (res) {
                     // if any of the found vneues is already in the current venues don't add it
-                    var inArrayAlready = _.find(responseVenues, function (responseVenue) {
-                        return responseVenue.venue.id == currentVenue.venue.id;
+                    var inArrayAlready = _.find(currentVenues, function (cur) {
+                        return cur.venue.id == res.venue.id;
                     });
 
                     if (!inArrayAlready) {
-                        responseVenues.push(currentVenue);
+                        if (currentVenues) {
+                            currentVenues.push(res);
+                        } else {
+                            currentVenues = responseVenues;
+                        }
                     }
                 });
             }
-            tpl.venues.set(responseVenues);
+            tpl.venues.set(currentVenues);
 
-
-            // set markers for all retrieved venues
             _.each(tpl.venues.get(), function (elem, index) {
                 if (index == 0) {
                     // TODO highlight current venue
@@ -160,19 +185,8 @@ if (Meteor.isClient) {
                 if (!elem.hasMarker) {
                     addMarker({
                         position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
-                        numPhotos: 3,
                         venueId: elem.venue.id
                     }, tpl);
-
-//                    google.maps.event.addListener(marker, "click", function () {
-//                        var id = this.venue_id;
-//                        colorMarker(this, "230, 50, 30", encodeURIComponent(elem.venue.categories[0].icon.prefix + "32" + elem.venue.categories[0].icon.suffix));
-//                        // TODO try catch
-//                        tpl.selected.set(_.find(tpl.venues.get(), function (elem) {
-//                            return elem.venue.id == id;
-//                        }));
-//                    });
-
                     elem.hasMarker = true;
                 }
             });

@@ -13,8 +13,9 @@ if (Meteor.isClient) {
     Template.VenuePhotos.rendered = function () {
         var tpl = Template.instance();
         var id = this.data.id;
+        tpl.images = new ReactiveVar();
 
-        console.log(tpl);
+        console.log("Template VenuePhotos", this.data);
 
         Meteor.call("venue_images", id, function (err, res) {
             if (err) {

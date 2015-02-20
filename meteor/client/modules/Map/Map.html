@@ -3,8 +3,13 @@
         {{> googleMap name="VenueMap" options=VenueMapOptions}}
     </div>
 
+    [map still work in progress, click interactions don't work ;)]
+
     {{#with selected}}
         {{>VenueCover}}
+        <div id="map-venue-photos">
+        {{>VenuePhotos}}
+        </div>
     {{else}}
         {{>LoadingAjax}}
     {{/with}}

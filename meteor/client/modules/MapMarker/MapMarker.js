@@ -2,11 +2,12 @@ if (Meteor.isClient) {
 
     Template.MapMarker.created = function () {
         this.images = new ReactiveVar([]);
+        this.numPhotos = new ReactiveVar();
     };
 
     Template.MapMarker.helpers({
         "numPhotos": function () {
-            return this.numPhotos;
+            return Template.instance().numPhotos.get();
         },
         "venueId": function () {
             return this.venueId;
@@ -21,15 +22,16 @@ if (Meteor.isClient) {
             data = this.data;
 
         console.log("get images for venue ", data.venueId);
+
         Meteor.call("venue_images", data.venueId, function (err, res) {
-            console.log("venues call", err, res, JSON.parse(res.content));
             if (err) {
                 Session.set("errors", _.union(Session.get("errors"), [err]));
                 return;
             }
             var result = JSON.parse(res.content);
-            console.log("images?", result);
             tpl.images.set(result);
+            console.log(result);
+            tpl.numPhotos.set(result.length);
 
 //            _.each(tpl.venues.get(), function (venue, index) {
 //                if (venue.venue.id == data.venueId) {
