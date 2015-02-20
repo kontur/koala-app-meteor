@@ -833,7 +833,10 @@ nav.fly-out {
   transition: all 0.25s ease-in-out;
 }
 nav.fly-out.open {
-  transform: translateX(0) !important;
+  -webkit-transform: translate(0, 0) !important;
+  -ms-transform: translate(0, 0) !important;
+  -o-transform: translate(0, 0) !important;
+  transform: translate(0, 0) !important;
 }
 nav.fly-out li {
   display: block;
@@ -853,7 +856,10 @@ nav.fly-out a:focus {
 }
 nav#menu {
   left: 0;
-  transform: translateX(-100%);
+  -webkit-transform: translate(0, -100%);
+  -ms-transform: translate(0, -100%);
+  -o-transform: translate(0, -100%);
+  transform: translate(0, -100%);
 }
 nav.drop-down {
   position: fixed;
@@ -874,6 +880,9 @@ nav.drop-down.open ul {
   display: block;
 }
 nav.drop-down.open .icon {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 nav.drop-down .drop-down-current {
@@ -890,6 +899,9 @@ nav.drop-down .icon {
   display: inline-block;
   margin: 0 0 0 0.5em;
   position: relative;
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
   transform: rotate(0deg);
   -webkit-transform-origin: center center;
   -moz-transform-origin: center center;

@@ -9,7 +9,7 @@ nav.fly-out {
   .transition(all 0.25s ease-in-out);
 
   &.open {
-    transform: translateX(0) !important;
+    .translate(0, 0) !important;
   }
 
   li {
@@ -33,9 +33,10 @@ nav.fly-out {
 
 nav#menu {
   left: 0;
-  transform: translateX(-100%);
+  .translate(0, -100%);
 
 }
+
 
 nav.drop-down {
   position: fixed;
@@ -52,7 +53,7 @@ nav.drop-down {
     }
 
     .icon {
-      transform: rotate(180deg);
+      .rotate(180deg);
     }
   }
 
@@ -71,7 +72,7 @@ nav.drop-down {
     display: inline-block;
     margin: 0 0 0 0.5em;
     position: relative;
-    transform: rotate(0deg);
+    .rotate(0deg);
     .transform-origin(center center);
     .transition(all 0.25s ease-in-out 0.2s);
     i {
