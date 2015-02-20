@@ -1,0 +1,11 @@
+<template name="MapMarker">
+    <div class="map-venue-marker" id="venue-marker-{{venueId}}">
+    <div class="marker-image">
+        {{#if images.[0]}}
+        <img src="{{images.[0].image}}">
+        {{else}}
+        {{>LoadingAjax}}
+        {{/if}}
+    </div>
+    <div class="marker-image-count">{{numPhotos}}</div></div>
+</template>

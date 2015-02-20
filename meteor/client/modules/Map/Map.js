@@ -37,10 +37,11 @@ if (Meteor.isClient) {
         var tpl = Template.instance();
         navigator.geolocation.getCurrentPosition(function (position) {
             Session.set("geolocation", position);
-            updateMap(position.coords, tpl);
 
             // when current user position resolved, add marker wrapped in map ready function
             if (GoogleMaps.loaded()) {
+                updateMap(position.coords, tpl);
+
                 GoogleMaps.ready("VenueMap", function () {
                     // Add a marker to the map once it"s ready
                     var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -79,70 +80,38 @@ if (Meteor.isClient) {
         markerLibLoaded = true;
         if (markerLibReadyStack.length > 0) {
             _.each(markerLibReadyStack, function (item) {
-                addMarker(item);
+                addMarker(item.data, item.tpl);
             });
         }
     }
 
-    function addMarker(options, tpl) {
-        console.log("addMarker", options);
+    function addMarker(data, tpl) {
+        console.log("addMarker", data);
         if (markerLibLoaded) {
-            console.log("addMarker do it", this);
+            var markerHtml = document.createElement("div");
+            Blaze.renderWithData(Template.MapMarker, data, markerHtml);
+
+            // user google maps utilities' RichMarker for using html in the map
             marker = new RichMarker({
-                position: options.position,
+                position: data.position,
                 map: GoogleMaps.maps.VenueMap.instance,
                 draggable: false,
                 flat: true,
                 anchor: RichMarkerPosition.BOTTOM,
 
-                // TODO would be nice to use Blaze here, actually
-                content: '<div class="map-venue-marker" id="venue-marker-' + options.venue_id + '">' +
-                    '<div class="marker-image"><img src="/img/loading.gif"/></div>' +
-                    '<div class="marker-image-count">' + options.numPhotos + '</div></div>'
+                // use Blaze to render the marker's html template and make it reactively
+                // load and update the image on creation
+                content: markerHtml
             });
 
             // event listener
 
-            // marker photo
-
-            console.log("get images for venue ", options.venue_id);
-            Meteor.call("venue_images", options.venue_id, function (err, res) {
-                console.log("venues call", err, res, JSON.parse(res.content));
-                if (err) {
-                    Session.set("errors", _.union(Session.get("errors"), [err]));
-                    return;
-                }
-                var result = JSON.parse(res.content);
-                console.log("images?", result);
-
-                _.each(tpl.venues.get(), function (venue, index) {
-                    if (venue.venue.id == options.venue_id) {
-                        venue.instagram = result;
-                    }
-                    console.log(venue);
-                });
-            });
 
         } else {
             console.log("addMarker to stack");
-            markerLibReadyStack.push("");
+            // push marker objects to stack later adding when lib has loaded
+            markerLibReadyStack.push({data: data, tpl: tpl });
         }
-
-        /*
-
-        var div = document.createElement('DIV');
-        div.innerHTML = '<div class="my-other-marker">I am flat marker!</div>';
-
-        marker2 = new RichMarker({
-          map: map,
-          position: new google.maps.LatLng(30, 50),
-          draggable: true,
-          flat: true,
-          anchor: RichMarkerPosition.MIDDLE,
-          content: div
-        });
-
-         */
     }
 
 
@@ -192,7 +161,7 @@ if (Meteor.isClient) {
                     addMarker({
                         position: new google.maps.LatLng(elem.venue.location.lat, elem.venue.location.lng),
                         numPhotos: 3,
-                        venue_id: elem.venue.id
+                        venueId: elem.venue.id
                     }, tpl);
 
 //                    google.maps.event.addListener(marker, "click", function () {

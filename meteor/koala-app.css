@@ -1116,7 +1116,11 @@ main > .map-container {
   background: white;
   border: 1px solid #aaaaaa;
   border-radius: 4px;
-  padding: 4px;
+  padding: 2px;
+  min-width: 60px;
+}
+.map-venue-marker .marker-image img {
+  max-width: 60px;
 }
 .map-venue-marker .marker-image-count {
   background: white;
