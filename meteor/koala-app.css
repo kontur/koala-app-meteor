@@ -814,6 +814,7 @@ header#header > button {
   border-radius: 0;
   width: 3em;
   height: 2em;
+  z-index: 202;
 }
 header#header .menu-toggle {
   left: 0;
@@ -860,6 +861,7 @@ nav#menu {
   -ms-transform: translate(0, -100%);
   -o-transform: translate(0, -100%);
   transform: translate(0, -100%);
+  z-index: 201;
 }
 nav.drop-down {
   position: fixed;
@@ -872,6 +874,7 @@ nav.drop-down {
   -webkit-transition: height 0.25s ease-in-out;
   -o-transition: height 0.25s ease-in-out;
   transition: height 0.25s ease-in-out;
+  z-index: 201;
 }
 nav.drop-down.open {
   height: auto;
@@ -1153,6 +1156,7 @@ body {
   overflow-x: hidden;
 }
 body {
+  font-size: 1.25em;
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 300;
   color: #555555;

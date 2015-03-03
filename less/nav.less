@@ -34,7 +34,7 @@ nav.fly-out {
 nav#menu {
   left: 0;
   .translate(0, -100%);
-
+  z-index: 201;
 }
 
 
@@ -45,6 +45,7 @@ nav.drop-down {
   width: 100%;
   .box-sizing(border-box);
   .transition(height 0.25s ease-in-out);
+  z-index: 201;
 
   &.open {
     height: auto;
